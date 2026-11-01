@@ -39,7 +39,7 @@ body.tutorial-active .zen-shell {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(18, 29, 25, 0.92);
+  background: var(--bg-header);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border-zen);
@@ -158,7 +158,7 @@ body.tutorial-active .zen-shell {
   max-height: 190px;
   margin: 0 auto 12px auto;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--bg-card) 60%, var(--bg-chip) 100%);
+  background: var(--dial-bg);
   border: 4px solid var(--border-zen);
   display: flex;
   flex-direction: column;
@@ -182,16 +182,16 @@ body.tutorial-active .zen-shell {
   font-weight: 900;
   letter-spacing: -0.03em;
   font-family: var(--font-digits);
-  color: #ffffff;
+  color: var(--text-zen);
   line-height: 1.1;
   margin-bottom: 4px;
 }
 
 .dial-status-pill {
   display: inline-block;
-  background: rgba(20, 184, 166, 0.18);
+  background: var(--dial-pill-bg);
   border: 1px solid var(--border-glow);
-  color: var(--accent-mint);
+  color: var(--dial-pill-text);
   font-size: 10.5px;
   font-weight: 700;
   padding: 2px 9px;
@@ -404,8 +404,9 @@ body.tutorial-active .zen-shell {
 }
 
 .zen-inflow-badge {
-  background: rgba(224, 122, 95, 0.18);
-  color: #e07a5f;
+  background: var(--accent-badge-bg);
+  border: 1px solid var(--accent-badge-border);
+  color: var(--accent-badge-text);
   font-size: 11px;
   font-weight: 800;
   padding: 3px 9px;
@@ -415,8 +416,8 @@ body.tutorial-active .zen-shell {
 }
 
 .btn-zen-action {
-  background: rgba(224, 122, 95, 0.2);
-  border: 1px solid var(--accent-sage);
+  background: var(--accent-badge-bg);
+  border: 1px solid var(--border-glow);
   color: var(--text-zen);
   font-weight: 700;
   font-size: 11px;
@@ -427,7 +428,7 @@ body.tutorial-active .zen-shell {
 }
 
 .btn-zen-action:hover {
-  background: var(--accent-sage);
+  background: var(--accent-primary);
   color: #ffffff;
 }
 
@@ -439,12 +440,12 @@ body.tutorial-active .zen-shell {
   transform: translateX(-50%);
   width: calc(100% - 24px);
   max-width: 460px;
-  background: rgba(34, 28, 25, 0.95);
+  background: var(--bg-island);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1.5px solid rgba(224, 122, 95, 0.35);
+  border: 1.5px solid var(--border-glow);
   border-radius: 999px;
-  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.6), var(--zen-shadow);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -478,18 +479,18 @@ body.tutorial-active .zen-shell {
 }
 
 .island-tab.active {
-  color: var(--accent-sage);
+  color: var(--accent-primary);
 }
 
 .island-tab.active .island-glyph {
-  filter: drop-shadow(0 0 8px rgba(224, 122, 95, 0.6));
+  filter: drop-shadow(0 0 8px var(--border-glow));
 }
 
 /* Center Raised Seed Action FAB */
 .island-seed-fab {
-  background: linear-gradient(135deg, #e07a5f, #ba5338);
+  background: var(--accent-gradient);
   color: #ffffff;
-  border: 2px solid rgba(242, 204, 143, 0.4);
+  border: 2px solid var(--border-glow);
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -499,14 +500,14 @@ body.tutorial-active .zen-shell {
   font-size: 22px;
   font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(224, 122, 95, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
   transform: translateY(-6px);
   transition: var(--transition-smooth);
 }
 
 .island-seed-fab:hover {
   transform: translateY(-9px) scale(1.06);
-  box-shadow: 0 12px 28px rgba(224, 122, 95, 0.6);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
 }
 
 /* Slide-Up Zen Sanctuary Drawer */
@@ -527,8 +528,8 @@ body.tutorial-active .zen-shell {
 }
 
 .zen-drawer-sheet {
-  background: #1c1714;
-  border-top: 1.5px solid rgba(224, 122, 95, 0.35);
+  background: var(--bg-drawer);
+  border-top: 1.5px solid var(--border-glow);
   border-radius: 28px 28px 0 0;
   width: 100%;
   max-width: 540px;
@@ -546,7 +547,7 @@ body.tutorial-active .zen-shell {
   width: 42px;
   height: 4px;
   border-radius: 99px;
-  background: rgba(224, 122, 95, 0.4);
+  background: var(--border-glow);
   margin: 0 auto 14px;
 }
 
@@ -557,8 +558,8 @@ body.tutorial-active .zen-shell {
 }
 
 .drawer-link-btn {
-  background: #251e1a;
-  border: 1px solid rgba(224, 122, 95, 0.2);
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
   border-radius: 16px;
   padding: 14px 18px;
   display: flex;
@@ -571,8 +572,8 @@ body.tutorial-active .zen-shell {
 }
 
 .drawer-link-btn:hover {
-  border-color: var(--accent-sage);
-  background: #2e2621;
+  border-color: var(--border-glow);
+  background: var(--bg-chip);
 }
 
 .drawer-btn-glyph {

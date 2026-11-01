@@ -350,9 +350,9 @@ body.tutorial-active .zen-floating-island .island-seed-fab:not(.tutorial-target-
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: rgba(224, 122, 95, 0.15);
-  border: 1px solid rgba(224, 122, 95, 0.35);
-  color: #e07a5f;
+  background: var(--accent-badge-bg);
+  border: 1px solid var(--accent-badge-border);
+  color: var(--accent-badge-text);
   font-size: 12px;
   font-weight: 800;
   font-family: inherit;
@@ -363,16 +363,16 @@ body.tutorial-active .zen-floating-island .island-seed-fab:not(.tutorial-target-
 }
 
 .zen-help-badge:hover {
-  background: rgba(224, 122, 95, 0.3);
-  color: #ffffff;
-  border-color: #f2cc8f;
+  background: var(--accent-badge-border);
+  color: var(--text-zen);
+  border-color: var(--border-glow);
   transform: scale(1.08);
 }
 
 /* Modal Contextual Guide Layout */
 #modal-leo-help .zen-modal-box {
-  background: rgba(30, 24, 21, 0.98);
-  border: 1.5px solid rgba(224, 122, 95, 0.35);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-glow);
   border-radius: 20px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
   max-width: 480px;
@@ -388,13 +388,13 @@ body.tutorial-active .zen-floating-island .island-seed-fab:not(.tutorial-target-
   justify-content: space-between;
   margin-bottom: 14px;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(224, 122, 95, 0.2);
+  border-bottom: 1px solid var(--border-zen);
 }
 
 .leo-help-title {
   font-size: 16px;
   font-weight: 800;
-  color: #fbf7f4;
+  color: var(--text-zen);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -407,8 +407,8 @@ body.tutorial-active .zen-floating-island .island-seed-fab:not(.tutorial-target-
 }
 
 .leo-help-tier {
-  background: rgba(43, 34, 30, 0.65);
-  border: 1px solid rgba(224, 122, 95, 0.2);
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
   border-radius: 12px;
   padding: 12px 14px;
 }
@@ -418,7 +418,7 @@ body.tutorial-active .zen-floating-island .island-seed-fab:not(.tutorial-target-
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #e07a5f;
+  color: var(--accent-primary);
   margin-bottom: 4px;
   display: flex;
   align-items: center;
@@ -427,6 +427,6 @@ body.tutorial-active .zen-floating-island .island-seed-fab:not(.tutorial-target-
 
 .leo-tier-content {
   font-size: 13px;
-  color: #dfd5ce;
+  color: var(--text-muted);
   line-height: 1.5;
 }
