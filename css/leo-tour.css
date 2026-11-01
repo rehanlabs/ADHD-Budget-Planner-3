@@ -1,14 +1,14 @@
 /* =========================================================
    ADHD Budget Planner (Edition 3) - Leo's Step-by-Step Tour & Mindful Guide
    Wabi-Sabi Warm Terracotta: Zero-blur crystal clarity, DOM-anchored,
-   gentle ADHD guardrails, 100% mobile portrait responsive.
+   strict capture-phase ADHD guardrails, 100% mobile portrait responsive.
    ========================================================= */
 
 /* Ambient tint: crystal clear, zero blur */
 .tutorial-mask-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(18, 29, 25, 0.15);
+  background: rgba(18, 29, 25, 0.22);
   z-index: 9000;
   pointer-events: none;
   opacity: 0;
@@ -28,8 +28,9 @@ body.tutorial-active .zen-header {
   top: 44px;
 }
 
-body.tutorial-active .zen-floating-island .island-tab {
-  opacity: 0.75;
+body.tutorial-active .zen-floating-island .island-tab:not(.tutorial-target-active),
+body.tutorial-active .zen-floating-island .island-seed-fab:not(.tutorial-target-active) {
+  opacity: 0.55;
   transition: opacity 0.2s ease;
 }
 
@@ -39,8 +40,9 @@ body.tutorial-active .zen-floating-island .island-tab {
   z-index: 9200 !important;
   outline: 2.5px solid #e07a5f !important;
   outline-offset: 3px !important;
-  box-shadow: 0 0 0 6px rgba(224, 122, 95, 0.25), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 0 0 6px rgba(224, 122, 95, 0.28), 0 8px 24px rgba(0, 0, 0, 0.55) !important;
   animation: leoTargetPulse 2s infinite ease-in-out !important;
+  cursor: pointer !important;
 }
 
 @keyframes leoTargetPulse {
@@ -51,8 +53,8 @@ body.tutorial-active .zen-floating-island .island-tab {
 /* Anchored Leo Target Badge */
 .leo-target-badge {
   position: absolute;
-  top: -12px;
-  right: 12px;
+  top: -13px;
+  right: 10px;
   background: linear-gradient(135deg, #e07a5f, #ba5338);
   color: #ffffff;
   font-size: 11px;
@@ -62,7 +64,7 @@ body.tutorial-active .zen-floating-island .island-tab {
   display: flex;
   align-items: center;
   gap: 5px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
   pointer-events: none;
   z-index: 9210;
   white-space: nowrap;
@@ -84,8 +86,9 @@ body.tutorial-active .zen-floating-island .island-tab {
 
 /* Typing animation highlight */
 .typing-active {
-  outline: 2px solid #e07a5f !important;
-  background: rgba(224, 122, 95, 0.12) !important;
+  outline: 2.5px solid #e07a5f !important;
+  background: rgba(224, 122, 95, 0.16) !important;
+  transition: all 0.15s ease;
 }
 
 /* Top Tutorial HUD Bar */
@@ -95,51 +98,66 @@ body.tutorial-active .zen-floating-island .island-tab {
   left: 0;
   right: 0;
   height: 44px;
-  background: rgba(26, 21, 18, 0.96);
+  background: rgba(26, 21, 18, 0.97);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(224, 122, 95, 0.3);
+  border-bottom: 1px solid rgba(224, 122, 95, 0.35);
   color: #fbf7f4;
-  padding: 0 16px;
+  padding: 0 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 9700;
-  font-size: 13px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
 }
 
 .tutorial-hud-title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .tutorial-hud-step-pill {
   background: rgba(224, 122, 95, 0.2);
   color: #e07a5f;
-  border: 1px solid rgba(224, 122, 95, 0.3);
+  border: 1px solid rgba(224, 122, 95, 0.35);
   padding: 2px 8px;
   border-radius: 999px;
   font-size: 11px;
   font-weight: 800;
 }
 
+.tutorial-hud-sub {
+  color: #c4b5ac;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+@media (max-width: 520px) {
+  .tutorial-hud-sub {
+    display: none;
+  }
+}
+
 .tutorial-hud-exit {
-  background: rgba(43, 34, 30, 0.8);
-  border: 1px solid rgba(224, 122, 95, 0.3);
+  background: rgba(43, 34, 30, 0.85);
+  border: 1px solid rgba(224, 122, 95, 0.35);
   color: #dfd5ce;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  padding: 4px 12px;
+  padding: 5px 11px;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
 .tutorial-hud-exit:hover {
-  background: rgba(61, 48, 42, 0.9);
+  background: rgba(61, 48, 42, 0.95);
   color: #ffffff;
   border-color: #f2cc8f;
 }
@@ -147,7 +165,7 @@ body.tutorial-active .zen-floating-island .island-tab {
 /* Floating Tour Guide Card (Mobile-First, Safe Above Floating Island) */
 .leo-guide-card {
   position: fixed;
-  bottom: calc(88px + env(safe-area-inset-bottom, 10px));
+  bottom: calc(86px + env(safe-area-inset-bottom, 8px));
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 24px);
@@ -155,17 +173,62 @@ body.tutorial-active .zen-floating-island .island-tab {
   background: #1c1613;
   border: 1.5px solid #e07a5f;
   border-radius: 20px;
-  padding: 15px 18px;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85), 0 0 24px rgba(224, 122, 95, 0.2);
+  padding: 14px 16px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.88), 0 0 24px rgba(224, 122, 95, 0.22);
   z-index: 9600;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-@keyframes leoCardSlideUp {
-  from { transform: translateX(-50%) translateY(16px); opacity: 0; }
-  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+/* Nudge Shake Animation when user clicks locked area outside current step */
+.leo-guide-card.nudge {
+  animation: leoNudgeShake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  border-color: #f2cc8f;
+}
+
+@keyframes leoNudgeShake {
+  10%, 90% { transform: translateX(calc(-50% - 4px)); }
+  20%, 80% { transform: translateX(calc(-50% + 6px)); }
+  30%, 50%, 70% { transform: translateX(calc(-50% - 8px)); }
+  40%, 60% { transform: translateX(calc(-50% + 8px)); }
+}
+
+.leo-nudge-toast {
+  background: rgba(242, 204, 143, 0.16);
+  border: 1px solid rgba(242, 204, 143, 0.45);
+  color: #f2cc8f;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Embedded Modal Guide Banner (when a modal is open during the tour) */
+.leo-modal-banner {
+  background: linear-gradient(145deg, rgba(224, 122, 95, 0.18), rgba(129, 178, 154, 0.16));
+  border: 1.5px solid #e07a5f;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  z-index: 9300;
+}
+
+.leo-modal-banner.nudge {
+  animation: leoBannerShake 0.42s ease both;
+  border-color: #f2cc8f;
+}
+
+@keyframes leoBannerShake {
+  10%, 90% { transform: translateX(-4px); }
+  20%, 80% { transform: translateX(6px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
 }
 
 .leo-guide-header {
@@ -173,7 +236,7 @@ body.tutorial-active .zen-floating-island .island-tab {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgba(224, 122, 95, 0.15);
-  padding-bottom: 8px;
+  padding-bottom: 7px;
 }
 
 .leo-guide-identity {
@@ -183,7 +246,7 @@ body.tutorial-active .zen-floating-island .island-tab {
 }
 
 .leo-avatar {
-  font-size: 20px;
+  font-size: 19px;
   line-height: 1;
 }
 
@@ -205,7 +268,7 @@ body.tutorial-active .zen-floating-island .island-tab {
 
 .leo-guide-body {
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.48;
   color: #dfd5ce;
 }
 
@@ -216,39 +279,59 @@ body.tutorial-active .zen-floating-island .island-tab {
 .leo-guide-actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 8px;
-  margin-top: 4px;
+  margin-top: 2px;
+}
+
+.leo-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .leo-btn-secondary {
-  background: rgba(43, 34, 30, 0.6);
+  background: rgba(43, 34, 30, 0.65);
   border: 1px solid rgba(224, 122, 95, 0.25);
   color: #c4b5ac;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  padding: 7px 14px;
+  padding: 6px 11px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
-.leo-btn-secondary:hover {
-  background: rgba(61, 48, 42, 0.8);
+.leo-btn-secondary:hover:not(:disabled) {
+  background: rgba(61, 48, 42, 0.85);
   color: #ffffff;
+}
+
+.leo-btn-secondary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .leo-btn-primary {
   background: linear-gradient(135deg, #e07a5f, #ba5338);
-  border: 1px solid rgba(242, 204, 143, 0.3);
+  border: 1px solid rgba(242, 204, 143, 0.35);
   color: #ffffff;
   font-size: 12px;
   font-weight: 800;
-  padding: 7px 16px;
-  border-radius: 8px;
+  padding: 8px 15px;
+  border-radius: 9px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(224, 122, 95, 0.35);
   transition: all 0.15s ease;
+}
+
+.leo-btn-primary.pulse {
+  animation: leoBtnPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes leoBtnPulse {
+  0%, 100% { box-shadow: 0 4px 12px rgba(224, 122, 95, 0.35), 0 0 0 0 rgba(224, 122, 95, 0.45); }
+  50% { box-shadow: 0 4px 16px rgba(224, 122, 95, 0.55), 0 0 0 5px rgba(224, 122, 95, 0); }
 }
 
 .leo-btn-primary:hover {

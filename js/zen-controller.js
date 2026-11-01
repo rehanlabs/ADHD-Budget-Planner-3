@@ -45,6 +45,21 @@
     renderCurrentScreen();
   }
 
+  window.setZenScreen = setScreen;
+  window.reloadZenState = function (newState) {
+    if (newState) {
+      state = newState;
+      StateManager.saveState(state);
+    } else {
+      state = StateManager.loadState();
+    }
+    document.body.dataset.theme = (state.profile && state.profile.theme) || 'sage-harmony';
+    renderCurrentScreen();
+  };
+  window.getZenState = function () {
+    return state;
+  };
+
   function renderHeader() {
     const soundBtn = document.getElementById('btn-sound-toggle');
     if (soundBtn) {
@@ -504,7 +519,7 @@
     setScreen('allowance');
 
     // Automatic First-Time Mindful Onboarding Tour (Only marked done when user exits/completes tour)
-    const hasAutoGuided = localStorage.getItem('adhd_leo_tour_v2_done') === 'true';
+    const hasAutoGuided = localStorage.getItem('adhd_leo_tour_v3_done') === 'true';
     if (!hasAutoGuided) {
       setTimeout(() => {
         if (window.LeoTour && typeof window.LeoTour.startTour === 'function') {
