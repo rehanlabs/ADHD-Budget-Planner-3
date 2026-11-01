@@ -98,11 +98,11 @@
     {
       title: 'Living Costs (Fixed Bills)',
       body: 'Tap <strong>Living Costs</strong>. This is where your shelter, heat, and phone commitments stay protected. When you get paid, money is automatically reserved for them first.',
-      target: '.zen-tab[data-nav="living"]',
-      badge: '📅 View Living Costs',
+      target: '.island-tab[data-nav="living"], .zen-tab[data-nav="living"]',
+      badge: '🌾 View Living Costs',
       actionText: 'Check Living Costs ➔',
       action: async (controller) => {
-        const tab = document.querySelector('.zen-tab[data-nav="living"]');
+        const tab = document.querySelector('.island-tab[data-nav="living"], .zen-tab[data-nav="living"]');
         if (tab) tab.click();
         await wait(300);
         controller.next();
@@ -111,11 +111,11 @@
     {
       title: 'Cooldown Hold (48h Vault)',
       body: 'Suddenly tempted by an online shopping impulse? Park it in <strong>Cooldown Hold</strong>. In 48 hours, the dopamine wave passes and 82% of impulses fade on their own!',
-      target: '.zen-tab[data-nav="cooldown"]',
+      target: '.island-tab[data-nav="cooldown"], .zen-tab[data-nav="cooldown"]',
       badge: '⏳ View Cooldown Hold',
       actionText: 'Check Cooldown Hold ➔',
       action: async (controller) => {
-        const tab = document.querySelector('.zen-tab[data-nav="cooldown"]');
+        const tab = document.querySelector('.island-tab[data-nav="cooldown"], .zen-tab[data-nav="cooldown"]');
         if (tab) tab.click();
         await wait(300);
         controller.next();
@@ -124,11 +124,11 @@
     {
       title: 'Fog Mode (Emergency Screen)',
       body: 'Having a high-fog, burnout, or migraine day? Tap <strong>Fog Mode</strong> in the top bar. All complexity vanishes, showing only your safe spending number.',
-      target: '#btn-zombie-trigger',
+      target: '#btn-fog-trigger',
       badge: '🌫️ Low Bandwidth Mode',
-      actionText: 'Finish Tour 🎉',
+      actionText: 'Finish Tour 🧘',
       action: async (controller) => {
-        const tab = document.querySelector('.zen-tab[data-nav="allowance"]');
+        const tab = document.querySelector('.island-tab[data-nav="allowance"], .zen-tab[data-nav="allowance"]');
         if (tab) tab.click();
         controller.finish();
       }

@@ -1,6 +1,6 @@
 /**
- * ADHD Budget Planner - Application Controller (Edition 3)
- * Manages responsive state, radial progress dial, and offline storage.
+ * ADHD Budget Planner - Sanctuary Controller (Edition 3: Wabi-Sabi Terracotta)
+ * Concentric radial dial, floating zen island navigation, slide-up drawer, and mindful auto-onboarding.
  */
 (function () {
   'use strict';
@@ -11,32 +11,35 @@
   function playGentleClick() {
     if (!state || !state.profile || !state.profile.soundEnabled) return;
     try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(520, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(520, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(260, ctx.currentTime + 0.06);
+      gain.gain.setValueAtTime(0.06, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(ctx.destination);
       osc.start();
-      osc.stop(audioCtx.currentTime + 0.08);
-    } catch {
-      // AudioContext unavailable
-    }
+      osc.stop(ctx.currentTime + 0.06);
+    } catch (_) {}
   }
 
   function setScreen(screenId) {
     currentScreen = screenId;
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.zen-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.island-tab, .zen-tab').forEach(t => t.classList.remove('active'));
 
     const targetScreen = document.getElementById(`screen-${screenId}`);
     if (targetScreen) targetScreen.classList.add('active');
 
-    const targetTab = document.querySelector(`.zen-tab[data-nav="${screenId}"]`);
+    const targetTab = document.querySelector(`.island-tab[data-nav="${screenId}"], .zen-tab[data-nav="${screenId}"]`);
     if (targetTab) targetTab.classList.add('active');
+
+    // Close drawer if open
+    const drawer = document.getElementById('sanctuary-drawer-sheet');
+    if (drawer) drawer.classList.remove('active');
 
     window.scrollTo({ top: 0, behavior: 'instant' });
     renderCurrentScreen();
@@ -54,6 +57,7 @@
       checkingCents: state.checkingCents,
       incomeAnchor: state.incomeAnchor,
       incomeCycle: state.incomeCycle,
+      balanceUpdatedAt: state.balanceUpdatedAt,
       bills: state.livingCosts,
       transactions: state.transactions
     };
@@ -65,12 +69,25 @@
 
     const runwayPill = document.getElementById('dial-runway-pill');
     if (runwayPill) {
-      runwayPill.textContent = `${safe.daysRunway} days until payday (${safe.nextPaydayISO})`;
+      runwayPill.textContent = `${safe.daysRunway} days peace until inflow (${safe.nextPaydayISO})`;
     }
 
     const subtext = document.getElementById('dial-subtext');
     if (subtext) {
-      subtext.innerHTML = `Spendable pool: <strong>${CoreCalculator.formatCents(safe.spendablePoolCents, state.profile.currency)}</strong> • Living costs reserved: <strong>${CoreCalculator.formatCents(safe.pendingBillsCents, state.profile.currency)}</strong>`;
+      subtext.innerHTML = `Spendable pool: <strong>${CoreCalculator.formatCents(safe.spendablePoolCents, state.profile.currency)}</strong> • Fixed commitments: <strong>${CoreCalculator.formatCents(safe.pendingBillsCents, state.profile.currency)}</strong>`;
+    }
+
+    // Inflow Sanctuary Widget
+    const inflowHeading = document.getElementById('zen-inflow-status-text');
+    const inflowPeace = document.getElementById('zen-inflow-peace-runway');
+    if (inflowHeading) {
+      const payAmtFormatted = CoreCalculator.formatCents(state.paycheckCents || 250000, state.profile.currency);
+      const cycleName = (state.incomeCycle || 'biweekly').replace(/^\w/, c => c.toUpperCase());
+      inflowHeading.textContent = `${safe.nextPaydayISO} • Inflow: ${payAmtFormatted} (${cycleName})`;
+    }
+    if (inflowPeace) {
+      const pendingFormatted = CoreCalculator.formatCents(safe.pendingBillsCents, state.profile.currency);
+      inflowPeace.textContent = `🌱 ${safe.daysRunway} days of financial runway • Reserved for living: ${pendingFormatted}`;
     }
 
     // Render Quick Spends (Vertical 3-item stack)
@@ -114,32 +131,32 @@
     const list = document.getElementById('living-list');
     if (!list) return;
     if (!state.livingCosts || state.livingCosts.length === 0) {
-      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">No living costs recorded. Tap "+ Add Cost" to reserve rent or utilities.</p>`;
+      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">No living costs recorded. Tap "+ Add Cost" to reserve shelter or utilities.</p>`;
       return;
     }
 
     list.innerHTML = state.livingCosts.map(b => `
       <div class="harmony-card">
         <div class="card-top">
-          <div class="card-name"><span>📅</span> <span>${b.name}</span></div>
+          <div class="card-name">${b.name}</div>
           <div class="card-val">${CoreCalculator.formatCents(b.amountCents, state.profile.currency)}</div>
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-muted);">
-          <span>Due date: ${b.dueDate}</span>
-          <button type="button" class="btn-harmony-action ${b.paid ? 'cleared' : ''}" data-cost-id="${b.id}">
-            ${b.paid ? '✓ Settled' : 'Mark Settled'}
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:12px;color:var(--text-muted);">Due: ${b.dueDate}</span>
+          <button type="button" class="btn-harmony-action ${b.paid ? 'cleared' : ''}" data-pay-id="${b.id}">
+            ${b.paid ? 'Paid ✓' : 'Mark Paid'}
           </button>
         </div>
       </div>
     `).join('');
 
-    list.querySelectorAll('.btn-harmony-action').forEach(btn => {
+    list.querySelectorAll('[data-pay-id]').forEach(btn => {
       btn.onclick = () => {
-        const cost = state.livingCosts.find(b => b.id === btn.dataset.costId);
+        const cost = state.livingCosts.find(c => c.id === btn.dataset.payId);
         if (cost) {
           cost.paid = !cost.paid;
-          playGentleClick();
           StateManager.saveState(state);
+          playGentleClick();
           renderLivingCosts();
           renderAllowance();
         }
@@ -151,7 +168,7 @@
     const list = document.getElementById('cooldown-list');
     if (!list) return;
     if (!state.cooldownHoldItems || state.cooldownHoldItems.length === 0) {
-      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">Your Cooldown Hold is clear. When shopping urges hit, park them here for 48 hours to cool down!</p>`;
+      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">Cooldown Hold is empty. Park impulse urges here for 48 hours.</p>`;
       return;
     }
 
@@ -161,58 +178,62 @@
       return `
         <div class="harmony-card">
           <div class="card-top">
-            <div class="card-name"><span>⏳</span> <span>${item.name}</span></div>
+            <div class="card-name">${item.name}</div>
             <div class="card-val">${CoreCalculator.formatCents(item.amountCents, state.profile.currency)}</div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-muted);">
-            <span>${cd.isUnlocked ? '✨ 48 hours passed! Do you still want this?' : `Cooldown: ${cd.remainingHours}h remaining`}</span>
-            <button type="button" class="btn-harmony-action" data-cooldown-id="${item.id}">Release Urge</button>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:var(--accent-mint);">
+              ${cd.isUnlocked ? '🔓 48h Passed — Urge resolved?' : `⏳ ${cd.remainingHours}h remaining`}
+            </span>
+            <button type="button" class="btn-harmony-action" data-del-cooldown="${item.id}" style="background:#dc2626;">Dismiss</button>
           </div>
         </div>
       `;
     }).join('');
 
-    list.querySelectorAll('.btn-harmony-action').forEach(btn => {
+    list.querySelectorAll('[data-del-cooldown]').forEach(btn => {
       btn.onclick = () => {
-        const idx = state.cooldownHoldItems.findIndex(i => i.id === btn.dataset.cooldownId);
-        if (idx !== -1) {
-          state.cooldownHoldItems.splice(idx, 1);
-          playGentleClick();
-          StateManager.saveState(state);
-          renderCooldownHold();
-        }
+        state.cooldownHoldItems = state.cooldownHoldItems.filter(i => i.id !== btn.dataset.delCooldown);
+        StateManager.saveState(state);
+        playGentleClick();
+        renderCooldownHold();
       };
     });
   }
 
   function renderDebtFreedom() {
+    const summary = document.getElementById('debt-freedom-plan');
     const list = document.getElementById('debt-list');
-    if (!list) return;
-    const plan = CoreCalculator.calculateDebtPlan(state.debts, 5000);
-    document.getElementById('debt-freedom-plan').textContent = plan.isDebtFree ? `Projected Debt Free in ~${plan.monthsToDebtFree} months` : 'Enter debts to calculate freedom plan';
-
     if (!state.debts || state.debts.length === 0) {
-      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:20px;">No debts listed. You are debt free! 🎉</p>`;
+      if (summary) summary.textContent = '🕊️ Zero liabilities. Peace achieved!';
+      if (list) list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">No debt obligations on your path.</p>`;
       return;
     }
 
-    list.innerHTML = state.debts.map(d => `
-      <div class="harmony-card">
-        <div class="card-top">
-          <div class="card-name"><span>💳</span> <span>${d.name}</span></div>
-          <div class="card-val">${CoreCalculator.formatCents(d.balanceCents, state.profile.currency)}</div>
+    const plan = CoreCalculator.calculateDebtPlan(state.debts, 5000);
+    if (summary) {
+      summary.innerHTML = `Debt Free in <strong>${plan.monthsToDebtFree} months</strong> (Saving $${(plan.totalInterestPaidCents/100).toFixed(0)} in interest)`;
+    }
+
+    if (list) {
+      list.innerHTML = state.debts.map(d => `
+        <div class="harmony-card">
+          <div class="card-top">
+            <div class="card-name">${d.name}</div>
+            <div class="card-val">${CoreCalculator.formatCents(d.balanceCents, state.profile.currency)}</div>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);">
+            Min Payment: ${CoreCalculator.formatCents(d.minPaymentCents, state.profile.currency)}/mo (${d.interestRate}% APR)
+          </div>
         </div>
-        <div style="font-size:12px;color:var(--text-muted);">
-          Min Payment: ${CoreCalculator.formatCents(d.minPaymentCents, state.profile.currency)}/mo (${d.interestRate}% APR)
-        </div>
-      </div>
-    `).join('');
+      `).join('');
+    }
   }
 
   function renderMindDump() {
     const textarea = document.getElementById('minddump-textarea-input');
-    if (textarea && state.notes !== undefined) {
-      textarea.value = state.notes;
+    if (textarea && state) {
+      textarea.value = state.notes || '';
     }
   }
 
@@ -226,12 +247,18 @@
   }
 
   function bindUI() {
-    // Nav tabs
-    document.querySelectorAll('.zen-tab').forEach(tab => {
+    // Nav tabs (Floating Zen Island & Drawer links)
+    document.querySelectorAll('.island-tab[data-nav], .zen-tab').forEach(tab => {
       tab.onclick = () => setScreen(tab.dataset.nav);
     });
 
-    // Top Actions
+    document.querySelectorAll('[data-drawer-nav]').forEach(btn => {
+      btn.onclick = () => {
+        setScreen(btn.dataset.drawerNav);
+      };
+    });
+
+    // Top Header Actions
     document.getElementById('btn-sound-toggle').onclick = () => {
       state.profile.soundEnabled = !state.profile.soundEnabled;
       StateManager.saveState(state);
@@ -249,6 +276,72 @@
     };
     document.getElementById('btn-fog-close').onclick = () => {
       fog.classList.remove('active');
+    };
+
+    // Sanctuary Slide-Up Drawer
+    const drawer = document.getElementById('sanctuary-drawer-sheet');
+    document.getElementById('btn-open-sanctuary-drawer').onclick = () => {
+      drawer.classList.add('active');
+    };
+    document.getElementById('btn-close-sanctuary-drawer').onclick = () => {
+      drawer.classList.remove('active');
+    };
+    drawer.onclick = (e) => {
+      if (e.target === drawer) drawer.classList.remove('active');
+    };
+
+    // Inflow Modal
+    const modalInflow = document.getElementById('modal-set-zen-payday');
+    document.getElementById('btn-configure-zen-inflow').onclick = () => {
+      document.getElementById('input-zen-inflow-date').value = state.incomeAnchor || new Date().toISOString().slice(0, 10);
+      document.getElementById('input-zen-inflow-amount').value = ((state.paycheckCents || 250000) / 100).toFixed(2);
+      document.getElementById('select-zen-inflow-cycle').value = state.incomeCycle || 'biweekly';
+      document.getElementById('input-zen-inflow-checking').value = (state.checkingCents / 100).toFixed(2);
+      modalInflow.classList.add('open');
+    };
+    document.getElementById('btn-close-set-inflow').onclick = () => {
+      modalInflow.classList.remove('open');
+    };
+    document.getElementById('form-set-zen-inflow').onsubmit = (e) => {
+      e.preventDefault();
+      state.incomeAnchor = document.getElementById('input-zen-inflow-date').value;
+      state.paycheckCents = CoreCalculator.parseToCents(document.getElementById('input-zen-inflow-amount').value);
+      state.incomeCycle = document.getElementById('select-zen-inflow-cycle').value;
+      state.checkingCents = CoreCalculator.parseToCents(document.getElementById('input-zen-inflow-checking').value);
+      state.balanceUpdatedAt = Date.now();
+      StateManager.saveState(state);
+      modalInflow.classList.remove('open');
+      playGentleClick();
+      renderAllowance();
+    };
+
+    // Center Raised Seed FAB (Quick Custom Spend)
+    const modalSpend = document.getElementById('modal-zen-spend');
+    document.getElementById('island-btn-seed-action').onclick = () => {
+      document.getElementById('input-zen-spend-title').value = '';
+      document.getElementById('input-zen-spend-amt').value = '';
+      modalSpend.classList.add('open');
+    };
+    document.getElementById('btn-close-zen-spend').onclick = () => {
+      modalSpend.classList.remove('open');
+    };
+    document.getElementById('form-zen-spend').onsubmit = (e) => {
+      e.preventDefault();
+      const title = document.getElementById('input-zen-spend-title').value.trim() || 'Mindful Spend';
+      const amt = CoreCalculator.parseToCents(document.getElementById('input-zen-spend-amt').value);
+      if (amt > 0) {
+        state.transactions.unshift({
+          id: 'tx-' + Date.now(),
+          timestamp: Date.now(),
+          date: new Date().toISOString().slice(0, 10),
+          title: title,
+          amountCents: amt
+        });
+        StateManager.saveState(state);
+        modalSpend.classList.remove('open');
+        playGentleClick();
+        renderAllowance();
+      }
     };
 
     // Mind dump auto-save
@@ -366,6 +459,17 @@
     document.body.dataset.theme = state.profile.theme || 'sage-harmony';
     bindUI();
     setScreen('allowance');
+
+    // Automatic First-Time Mindful Onboarding Tour
+    const hasAutoGuided = localStorage.getItem('adhd_leo_auto_guided') === 'true';
+    if (!hasAutoGuided) {
+      setTimeout(() => {
+        if (window.LeoTour && typeof window.LeoTour.startTour === 'function') {
+          window.LeoTour.startTour();
+          localStorage.setItem('adhd_leo_auto_guided', 'true');
+        }
+      }, 500);
+    }
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});

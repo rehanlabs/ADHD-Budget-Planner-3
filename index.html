@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>ADHD Budget Planner</title>
-  <meta name="description" content="A calm, offline, low-stimulation budget planner engineered for ADHD brains. What is safe to spend today, impulse control, and debt freedom.">
-  <meta name="theme-color" content="#14b8a6">
+  <meta name="description" content="A gentle, mindful budgeting sanctuary engineered for ADHD focus.">
+  <meta name="theme-color" content="#161311">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="ADHD Budget Planner">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+  
   <link rel="stylesheet" href="./css/harmony-theme.css">
   <link rel="stylesheet" href="./css/harmony-layout.css">
   <link rel="stylesheet" href="./css/leo-tour.css">
@@ -25,16 +25,28 @@
     <header class="zen-header">
       <div class="header-inner">
         <div class="brand-group">
-          <div class="brand-circle-icon">🌿</div>
+          <div class="brand-circle-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </div>
           <div class="brand-text">
             <h1>ADHD Budget Planner</h1>
-            <span class="brand-tagline">Serene Money Clarity</span>
+            <span class="brand-tagline">Wabi-Sabi Sanctuary</span>
           </div>
         </div>
         <div class="header-btns">
-          <button type="button" class="btn-zen-pill" id="btn-fog-trigger" title="Fog Mode (Emergency Screen)">🌫️ Fog Mode</button>
-          <button type="button" class="btn-zen-icon" id="btn-leo-tour" title="Leo's Step-by-Step Tour">🧑‍💼</button>
-          <button type="button" class="btn-zen-icon" id="btn-sound-toggle" title="Haptic Audio">🔔</button>
+          <button type="button" class="btn-zen-pill" id="btn-fog-trigger" title="Fog Mode (Low Sensory Refuge)">🌫️ Fog Mode</button>
+          <button type="button" class="btn-zen-icon" id="btn-leo-tour" title="Leo's Step-by-Step Tour">🧘</button>
+          <button type="button" class="btn-zen-icon" id="btn-sound-toggle" title="Gentle Chime">🔔</button>
         </div>
       </div>
     </header>
@@ -43,26 +55,41 @@
     <main>
       <!-- 1. Allowance Screen -->
       <section id="screen-allowance" class="screen active">
+        <!-- Concentric Radial Sunburst Dial Hero -->
         <div class="radial-hero-card">
           <div class="dial-track-ring">
-            <span class="dial-label">✨ Safe to Spend Today</span>
+            <span class="dial-label">☀️ Safe to Spend Today</span>
             <div class="dial-number" id="dial-hero-amount">$0.00</div>
             <span class="dial-status-pill" id="dial-runway-pill">Runway calculating...</span>
           </div>
           <div class="dial-subtext" id="dial-subtext">Calculating fixed commitments...</div>
         </div>
 
-        <div style="font-size:12px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">
-          ⚡ 1-Tap Quick Spends
-        </div>
-        <div class="zen-quick-spends" id="zen-quick-spends" style="grid-template-columns: 1fr;">
-          <!-- 3 stacked horizontal pills populated dynamically -->
+        <!-- Mindful Inflow Sanctuary Card -->
+        <div class="zen-inflow-card" id="card-zen-inflow">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span class="zen-inflow-badge">🌱 Inflow & Payday</span>
+            <button type="button" class="btn-zen-action" id="btn-configure-zen-inflow" style="font-size:11px;padding:3px 9px;">Configure Inflow</button>
+          </div>
+          <div id="zen-inflow-status-text" style="font-size:14px;font-weight:800;color:var(--text-zen);">
+            Loading inflow projection...
+          </div>
+          <div id="zen-inflow-peace-runway" style="font-size:12px;color:var(--accent-mint);margin-top:3px;">
+            Calculating days of financial peace...
+          </div>
         </div>
 
-        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:16px;padding:16px;">
-          <div style="font-size:13px;font-weight:700;color:var(--accent-mint);margin-bottom:6px;">💡 ADHD Golden Rule:</div>
+        <div style="font-size:12px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin:16px 0 10px;">
+          🌿 Vertical Mindful Spends
+        </div>
+        <div class="zen-quick-spends" id="zen-quick-spends">
+          <!-- 3 stacked vertical pills populated dynamically -->
+        </div>
+
+        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:18px;padding:16px;margin-top:14px;">
+          <div style="font-size:13px;font-weight:700;color:var(--accent-sage);margin-bottom:6px;">🧘 Leo's Mindful Note:</div>
           <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">
-            Before making a discretionary purchase, glance at Safe to Spend Today. If it’s green, spend guilt-free knowing rent and bills are completely protected!
+            Money is a tool for peace, not stress. Whenever you check your safe allowance, take a breath knowing your fixed shelter and commitments are already protected.
           </p>
         </div>
       </section>
@@ -101,7 +128,7 @@
           <h2 style="font-size:18px;font-weight:800;">Debt Freedom (Crusher)</h2>
           <p style="font-size:12px;color:var(--text-muted);">Snowball & Avalanche accelerated debt freedom path.</p>
         </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:16px;padding:18px;text-align:center;margin-bottom:16px;">
+        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:18px;padding:18px;text-align:center;margin-bottom:16px;">
           <div style="font-size:11px;font-weight:700;color:var(--accent-gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Freedom Projection</div>
           <div style="font-size:17px;font-weight:800;color:var(--text-zen);" id="debt-freedom-plan">Calculating projection...</div>
         </div>
@@ -120,7 +147,7 @@
       <!-- 6. Sanctuary Config Screen -->
       <section id="screen-config" class="screen">
         <h2 style="font-size:18px;font-weight:800;margin-bottom:16px;">Sanctuary Config & Backup</h2>
-        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:16px;padding:18px;margin-bottom:18px;">
+        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:18px;padding:18px;margin-bottom:18px;">
           <form id="form-settings">
             <div class="zen-form-group">
               <label>Checking Account Balance ($)</label>
@@ -138,7 +165,7 @@
             <div class="zen-form-group">
               <label>Visual Color Theme</label>
               <select class="zen-select" id="settings-theme-field">
-                <option value="sage-harmony">Sage Harmony</option>
+                <option value="sage-harmony">Sage Harmony (Warm Editorial)</option>
                 <option value="oled-minimal">OLED Minimal</option>
                 <option value="sand-linen">Sand & Linen (Light)</option>
                 <option value="ocean-calm">Ocean Calm</option>
@@ -148,7 +175,7 @@
           </form>
         </div>
 
-        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:16px;padding:18px;">
+        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:18px;padding:18px;">
           <div style="font-size:14px;font-weight:700;margin-bottom:10px;">💾 Backup & Device Transfer</div>
           <button type="button" class="btn-harmony-action" id="btn-export-backup" style="width:100%;padding:12px;margin-bottom:14px;">Download Backup (.json)</button>
           <label style="display:block;font-size:12px;color:var(--text-muted);margin-bottom:6px;">Restore Backup File:</label>
@@ -157,55 +184,67 @@
       </section>
     </main>
 
-    <!-- Bottom Navigation Dock -->
-    <nav class="zen-dock" aria-label="Main Navigation">
-      <button type="button" class="zen-tab active" data-nav="allowance">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <circle cx="12" cy="12" r="9"/>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 3"/>
-        </svg>
-        <span>Allowance</span>
+    <!-- FLOATING CURVED ZEN ISLAND NAVIGATION (Unique Island Architecture) -->
+    <nav class="zen-floating-island" id="zen-island-nav" aria-label="Sanctuary Navigation">
+      <button type="button" class="island-tab active" data-nav="allowance">
+        <span class="island-glyph">☀️</span>
+        <span class="island-text">Allowance</span>
       </button>
 
-      <button type="button" class="zen-tab" data-nav="living">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-        </svg>
-        <span>Living</span>
+      <button type="button" class="island-tab" data-nav="living">
+        <span class="island-glyph">🌾</span>
+        <span class="island-text">Living</span>
       </button>
 
-      <button type="button" class="zen-tab" data-nav="cooldown">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-        </svg>
-        <span>Cooldown</span>
+      <!-- Center Raised Terracotta Seed FAB -->
+      <button type="button" class="island-seed-fab" id="island-btn-seed-action" title="Quick Add Spend">
+        <span>+</span>
       </button>
 
-      <button type="button" class="zen-tab" data-nav="freedom">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-        </svg>
-        <span>Freedom</span>
+      <button type="button" class="island-tab" data-nav="cooldown">
+        <span class="island-glyph">⏳</span>
+        <span class="island-text">Cooldown</span>
       </button>
 
-      <button type="button" class="zen-tab" data-nav="minddump">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-        </svg>
-        <span>Mind Dump</span>
-      </button>
-
-      <button type="button" class="zen-tab" data-nav="config">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <circle cx="12" cy="12" r="3"/>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
-        </svg>
-        <span>Config</span>
+      <button type="button" class="island-tab" id="btn-open-sanctuary-drawer" title="More Sanctuary Sections">
+        <span class="island-glyph">☰</span>
+        <span class="island-text">More</span>
       </button>
     </nav>
+
+    <!-- SLIDE-UP SANCTUARY DRAWER SHEET -->
+    <div class="zen-drawer-overlay" id="sanctuary-drawer-sheet">
+      <div class="zen-drawer-sheet">
+        <div class="drawer-handle-bar"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <h3 style="font-size:16px;font-weight:800;color:var(--text-zen);">🌿 Sanctuary Sections</h3>
+          <button type="button" class="btn-zen-icon" id="btn-close-sanctuary-drawer">&times;</button>
+        </div>
+        <div class="drawer-links-grid">
+          <button type="button" class="drawer-link-btn" data-drawer-nav="freedom">
+            <span class="drawer-btn-glyph">📉</span>
+            <div class="drawer-btn-text">
+              <strong>Debt Freedom</strong>
+              <span>Snowball & payoff path</span>
+            </div>
+          </button>
+          <button type="button" class="drawer-link-btn" data-drawer-nav="minddump">
+            <span class="drawer-btn-glyph">📝</span>
+            <div class="drawer-btn-text">
+              <strong>Mind Dump</strong>
+              <span>Zero-friction scratchpad</span>
+            </div>
+          </button>
+          <button type="button" class="drawer-link-btn" data-drawer-nav="config">
+            <span class="drawer-btn-glyph">⚙️</span>
+            <div class="drawer-btn-text">
+              <strong>Sanctuary Config</strong>
+              <span>Themes, currency, backup</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- FULLSCREEN FOG MODE OVERLAY -->
     <div id="fog-mode-overlay" class="zombie-screen-overlay">
@@ -214,6 +253,61 @@
       <div style="font-size:14px;color:#737373;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Safe to Spend Today</div>
       <div class="zombie-screen-number" id="fog-screen-amount">$0.00</div>
       <button type="button" class="btn-zombie-return" id="btn-fog-close">Exit Fog Mode 🌿</button>
+    </div>
+
+    <!-- MODAL: Set Inflow & Payday -->
+    <div id="modal-set-zen-payday" class="zen-modal-overlay">
+      <div class="zen-modal-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="font-size:16px;font-weight:800;">🌱 Configure Income Inflow</h3>
+          <button type="button" class="btn-zen-icon" id="btn-close-set-inflow" style="width:28px;height:28px;">&times;</button>
+        </div>
+        <form id="form-set-zen-inflow">
+          <div class="zen-form-group">
+            <label>Next Inflow Date (Payday)</label>
+            <input type="date" class="zen-input" id="input-zen-inflow-date" required>
+          </div>
+          <div class="zen-form-group">
+            <label>Expected Paycheck Sum ($)</label>
+            <input type="number" step="0.01" class="zen-input" id="input-zen-inflow-amount" placeholder="2500.00" required>
+          </div>
+          <div class="zen-form-group">
+            <label>Pay Cadence</label>
+            <select class="zen-select" id="select-zen-inflow-cycle">
+              <option value="biweekly">Bi-Weekly (Every 14 Days)</option>
+              <option value="weekly">Weekly (Every 7 Days)</option>
+              <option value="semimonthly">Semi-Monthly (1st & 15th)</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+          <div class="zen-form-group">
+            <label>Current Checking Cash ($)</label>
+            <input type="number" step="0.01" class="zen-input" id="input-zen-inflow-checking" placeholder="1400.00" required>
+          </div>
+          <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Save Sanctuary Inflow 🌿</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL: Quick Custom Spend -->
+    <div id="modal-zen-spend" class="zen-modal-overlay">
+      <div class="zen-modal-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="font-size:16px;font-weight:800;">✨ Log Mindful Spend</h3>
+          <button type="button" class="btn-zen-icon" id="btn-close-zen-spend" style="width:28px;height:28px;">&times;</button>
+        </div>
+        <form id="form-zen-spend">
+          <div class="zen-form-group">
+            <label>Spend Description</label>
+            <input type="text" class="zen-input" id="input-zen-spend-title" placeholder="Matcha Latte & Snack" required>
+          </div>
+          <div class="zen-form-group">
+            <label>Amount ($)</label>
+            <input type="number" step="0.01" class="zen-input" id="input-zen-spend-amt" placeholder="7.50" required>
+          </div>
+          <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Log Spend 🌿</button>
+        </form>
+      </div>
     </div>
 
     <!-- MODAL: Add Living Cost -->

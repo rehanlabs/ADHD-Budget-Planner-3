@@ -325,25 +325,66 @@ body {
   cursor: pointer;
 }
 
-/* Bottom Navigation Dock */
-.zen-dock {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(18, 29, 25, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid var(--border-zen);
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 12px;
-  z-index: 50;
-  max-width: 580px;
-  margin: 0 auto;
+/* Inflow Sanctuary Card */
+.zen-inflow-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 16px 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
 }
 
-.zen-tab {
+.zen-inflow-badge {
+  background: rgba(224, 122, 95, 0.18);
+  color: #e07a5f;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-zen-action {
+  background: rgba(224, 122, 95, 0.2);
+  border: 1px solid var(--accent-sage);
+  color: var(--text-zen);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-zen-action:hover {
+  background: var(--accent-sage);
+  color: #ffffff;
+}
+
+/* Floating Curved Zen Island Navigation (Unique Bottom-Center Architecture) */
+.zen-floating-island {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 36px);
+  max-width: 480px;
+  background: rgba(34, 28, 25, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(224, 122, 95, 0.35);
+  border-radius: 999px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 16px;
+  z-index: 60;
+}
+
+.island-tab {
   background: none;
   border: none;
   color: var(--text-muted);
@@ -354,27 +395,131 @@ body {
   font-size: 11px;
   font-weight: 700;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 6px 12px;
   border-radius: var(--radius-pill);
   transition: var(--transition-smooth);
 }
 
-.zen-tab svg {
-  width: 22px;
-  height: 22px;
-  stroke-width: 2;
+.island-glyph {
+  font-size: 18px;
+  line-height: 1;
 }
 
-.zen-tab:hover {
+.island-tab:hover {
   color: var(--text-zen);
 }
 
-.zen-tab.active {
-  color: var(--accent-mint);
+.island-tab.active {
+  color: var(--accent-sage);
 }
 
-.zen-tab.active svg {
-  stroke: var(--accent-mint);
+.island-tab.active .island-glyph {
+  filter: drop-shadow(0 0 8px rgba(224, 122, 95, 0.6));
+}
+
+/* Center Raised Seed Action FAB */
+.island-seed-fab {
+  background: linear-gradient(135deg, #e07a5f, #ba5338);
+  color: #ffffff;
+  border: 2px solid rgba(242, 204, 143, 0.4);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(224, 122, 95, 0.45);
+  transform: translateY(-8px);
+  transition: var(--transition-smooth);
+}
+
+.island-seed-fab:hover {
+  transform: translateY(-11px) scale(1.06);
+  box-shadow: 0 12px 28px rgba(224, 122, 95, 0.6);
+}
+
+/* Slide-Up Zen Sanctuary Drawer */
+.zen-drawer-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 80;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.zen-drawer-overlay.active {
+  display: flex;
+}
+
+.zen-drawer-sheet {
+  background: #1c1714;
+  border-top: 1.5px solid rgba(224, 122, 95, 0.35);
+  border-radius: 28px 28px 0 0;
+  width: 100%;
+  max-width: 540px;
+  padding: 16px 22px 34px;
+  box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.6);
+  animation: slideUpDrawer 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpDrawer {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.drawer-handle-bar {
+  width: 42px;
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(224, 122, 95, 0.4);
+  margin: 0 auto 14px;
+}
+
+.drawer-links-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drawer-link-btn {
+  background: #251e1a;
+  border: 1px solid rgba(224, 122, 95, 0.2);
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-zen);
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition-smooth);
+}
+
+.drawer-link-btn:hover {
+  border-color: var(--accent-sage);
+  background: #2e2621;
+}
+
+.drawer-btn-glyph {
+  font-size: 22px;
+}
+
+.drawer-btn-text strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text-zen);
+}
+
+.drawer-btn-text span {
+  font-size: 12px;
+  color: var(--text-muted);
 }
 
 /* Modals */
