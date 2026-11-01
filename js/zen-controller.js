@@ -503,19 +503,20 @@
     bindUI();
     setScreen('allowance');
 
-    // Automatic First-Time Mindful Onboarding Tour
-    const hasAutoGuided = localStorage.getItem('adhd_leo_auto_guided') === 'true';
+    // Automatic First-Time Mindful Onboarding Tour (Only marked done when user exits/completes tour)
+    const hasAutoGuided = localStorage.getItem('adhd_leo_tour_v2_done') === 'true';
     if (!hasAutoGuided) {
       setTimeout(() => {
         if (window.LeoTour && typeof window.LeoTour.startTour === 'function') {
           window.LeoTour.startTour();
-          localStorage.setItem('adhd_leo_auto_guided', 'true');
         }
-      }, 500);
+      }, 450);
     }
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
+      navigator.serviceWorker.register('./sw.js').then(reg => {
+        if (reg && typeof reg.update === 'function') reg.update();
+      }).catch(() => {});
     }
   }
 

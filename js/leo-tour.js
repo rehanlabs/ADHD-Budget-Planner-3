@@ -100,7 +100,7 @@
     {
       title: 'Mindful 1-Tap Spend Chips',
       body: 'No tedious receipt tracking or multi-tiered category menus. Grabbing tea, a snack, or fuel? One gentle tap records it and adjusts today’s dial instantly.',
-      target: '.quick-chips-row',
+      target: '#zen-quick-spends',
       badge: '🍵 Tap to Record',
       actionText: 'Next: Living Costs ➔',
       action: async (controller) => {
@@ -271,7 +271,7 @@
     if (mask) mask.classList.remove('active');
 
     try {
-      localStorage.setItem('leo_tour_completed', 'true');
+      localStorage.setItem('adhd_leo_tour_v2_done', 'true');
     } catch (e) {}
 
     // Return to allowance screen smoothly
