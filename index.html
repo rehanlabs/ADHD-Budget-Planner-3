@@ -39,7 +39,10 @@
             </svg>
           </div>
           <div class="brand-text">
-            <h1>ADHD Budget Planner</h1>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <h1>ADHD Budget Planner</h1>
+              <button type="button" class="zen-help-badge" data-leo-help="sanctuary.offline" title="Sovereign Sanctuary & Privacy">?</button>
+            </div>
             <span class="brand-tagline">Wabi-Sabi Sanctuary</span>
           </div>
         </div>
@@ -58,7 +61,10 @@
         <!-- Concentric Radial Sunburst Dial Hero -->
         <div class="radial-hero-card">
           <div class="dial-track-ring">
-            <span class="dial-label">☀️ Safe to Spend Today</span>
+            <span class="dial-label" style="display:flex;align-items:center;gap:4px;">
+              <span>☀️ Safe to Spend</span>
+              <button type="button" class="zen-help-badge" data-leo-help="allowance.radial" title="About Daily Allowance Dial">?</button>
+            </span>
             <div class="dial-number" id="dial-hero-amount">$0.00</div>
             <span class="dial-status-pill" id="dial-runway-pill">Runway calculating...</span>
           </div>
@@ -68,7 +74,10 @@
         <!-- Mindful Inflow Sanctuary Card -->
         <div class="zen-inflow-card" id="card-zen-inflow">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-            <span class="zen-inflow-badge">🌱 Inflow & Payday</span>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="zen-inflow-badge">🌱 Inflow & Payday</span>
+              <button type="button" class="zen-help-badge" data-leo-help="allowance.inflow" title="About Cash Inflow Stream">?</button>
+            </div>
             <button type="button" class="btn-zen-action" id="btn-configure-zen-inflow" style="font-size:11px;padding:3px 9px;">Configure Inflow</button>
           </div>
           <div id="zen-inflow-status-text" style="font-size:14px;font-weight:800;color:var(--text-zen);">
@@ -79,8 +88,11 @@
           </div>
         </div>
 
-        <div style="font-size:12px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin:16px 0 10px;">
-          🌿 Vertical Mindful Spends
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 10px;">
+          <div style="font-size:12px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">
+            🌿 Vertical Mindful Spends
+          </div>
+          <button type="button" class="zen-help-badge" data-leo-help="allowance.quickchip" title="About Mindful Spend Chips">?</button>
         </div>
         <div class="zen-quick-spends" id="zen-quick-spends">
           <!-- 3 stacked vertical pills populated dynamically -->
@@ -98,7 +110,10 @@
       <section id="screen-living" class="screen">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
           <div>
-            <h2 style="font-size:18px;font-weight:800;">Living Costs</h2>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <h2 style="font-size:18px;font-weight:800;">Living Costs</h2>
+              <button type="button" class="zen-help-badge" data-leo-help="living.costs" title="About Living Commitments">?</button>
+            </div>
             <p style="font-size:12px;color:var(--text-muted);">Fixed shelter & utility commitments reserved before calculating your allowance.</p>
           </div>
           <button type="button" class="btn-harmony-action" id="btn-add-living-open">+ Add Cost</button>
@@ -112,7 +127,10 @@
       <section id="screen-cooldown" class="screen">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
           <div>
-            <h2 style="font-size:18px;font-weight:800;">Cooldown Hold (48h Vault)</h2>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <h2 style="font-size:18px;font-weight:800;">Cooldown Hold (48h Vault)</h2>
+              <button type="button" class="zen-help-badge" data-leo-help="cooldown.patience" title="About Cooldown Garden">?</button>
+            </div>
             <p style="font-size:12px;color:var(--text-muted);">Park impulse shopping urges here. 82% fade calmly in 48 hours.</p>
           </div>
           <button type="button" class="btn-harmony-action" id="btn-add-cooldown-open">+ Hold Urge</button>
@@ -125,7 +143,10 @@
       <!-- 4. Debt Freedom Screen -->
       <section id="screen-freedom" class="screen">
         <div style="margin-bottom:16px;">
-          <h2 style="font-size:18px;font-weight:800;">Debt Freedom (Crusher)</h2>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <h2 style="font-size:18px;font-weight:800;">Debt Freedom (Crusher)</h2>
+            <button type="button" class="zen-help-badge" data-leo-help="freedom.ladder" title="About Freedom Ladder">?</button>
+          </div>
           <p style="font-size:12px;color:var(--text-muted);">Snowball & Avalanche accelerated debt freedom path.</p>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:18px;padding:18px;text-align:center;margin-bottom:16px;">
@@ -139,14 +160,20 @@
 
       <!-- 5. Mind Dump Screen -->
       <section id="screen-minddump" class="screen">
-        <h2 style="font-size:18px;font-weight:800;margin-bottom:6px;">Mind Dump Scratchpad</h2>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+          <h2 style="font-size:18px;font-weight:800;">Mind Dump Scratchpad</h2>
+          <button type="button" class="zen-help-badge" data-leo-help="minddump.zen" title="About Mindful Thought Stream">?</button>
+        </div>
         <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Zero-friction capture for money thoughts, upcoming purchases, or anxiety relief.</p>
         <textarea id="minddump-textarea-input" class="zen-input" style="height:280px;resize:none;font-size:14px;line-height:1.6;" placeholder="Type anything on your mind... auto-saves instantly."></textarea>
       </section>
 
       <!-- 6. Sanctuary Config Screen -->
       <section id="screen-config" class="screen">
-        <h2 style="font-size:18px;font-weight:800;margin-bottom:16px;">Sanctuary Config & Backup</h2>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px;">
+          <h2 style="font-size:18px;font-weight:800;">Sanctuary Config & Backup</h2>
+          <button type="button" class="zen-help-badge" data-leo-help="sanctuary.grace" title="About Grace Cushion & Sanctuary">?</button>
+        </div>
         <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:18px;padding:18px;margin-bottom:18px;">
           <form id="form-settings">
             <div class="zen-form-group">
@@ -248,7 +275,10 @@
 
     <!-- FULLSCREEN FOG MODE OVERLAY -->
     <div id="fog-mode-overlay" class="zombie-screen-overlay">
-      <div style="font-size:18px;color:#737373;font-weight:700;margin-bottom:8px;">🌫️ Fog Mode Active</div>
+      <div style="font-size:18px;color:#737373;font-weight:700;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <span>🌫️ Fog Mode Active</span>
+        <button type="button" class="zen-help-badge" data-leo-help="fog.mode" title="About Fog Mode">?</button>
+      </div>
       <p style="font-size:13px;color:#a3a3a3;margin-bottom:24px;">Low cognitive bandwidth day? Here is your single answer right now:</p>
       <div style="font-size:14px;color:#737373;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Safe to Spend Today</div>
       <div class="zombie-screen-number" id="fog-screen-amount">$0.00</div>
@@ -356,10 +386,39 @@
       </div>
     </div>
 
+    <!-- MODAL: LEO'S 4-TIER MINDFUL CONTEXTUAL HELP -->
+    <div id="modal-leo-help" class="zen-modal-overlay">
+      <div class="zen-modal-box">
+        <div class="leo-help-header">
+          <h3 class="leo-help-title" id="leo-help-title">🧘 Leo's Mindful Guide</h3>
+          <button type="button" class="btn-zen-icon" id="btn-close-leo-help" style="width:28px;height:28px;">&times;</button>
+        </div>
+        <div class="leo-help-tiers-container">
+          <div class="leo-help-tier">
+            <div class="leo-tier-label">🌿 The Mindful Purpose</div>
+            <div class="leo-tier-content" id="leo-help-core">&mdash;</div>
+          </div>
+          <div class="leo-help-tier">
+            <div class="leo-tier-label">🍵 Your Gentle Action</div>
+            <div class="leo-tier-content" id="leo-help-action">&mdash;</div>
+          </div>
+          <div class="leo-help-tier">
+            <div class="leo-tier-label">🧠 ADHD Cognitive Relief</div>
+            <div class="leo-tier-content" id="leo-help-brain">&mdash;</div>
+          </div>
+          <div class="leo-help-tier">
+            <div class="leo-tier-label">🎋 Zen Wisdom</div>
+            <div class="leo-tier-content" id="leo-help-wisdom">&mdash;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script src="./js/core-calculator.js"></script>
   <script src="./js/state-manager.js"></script>
+  <script src="./js/leo-help.js"></script>
   <script src="./js/leo-tour.js"></script>
   <script src="./js/zen-controller.js"></script>
 </body>

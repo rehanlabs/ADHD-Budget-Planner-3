@@ -406,6 +406,49 @@
       }
     };
 
+    // Leo Contextual Help Badges Modal
+    const modalLeoHelp = document.getElementById('modal-leo-help');
+    document.addEventListener('click', (e) => {
+      const badge = e.target.closest('[data-leo-help]');
+      if (badge && modalLeoHelp && window.LeoHelp) {
+        const key = badge.dataset.leoHelp;
+        const item = window.LeoHelp[key];
+        if (item) {
+          document.getElementById('leo-help-title').textContent = '🧘 ' + item.title;
+          document.getElementById('leo-help-core').textContent = item.core;
+          document.getElementById('leo-help-action').textContent = item.action;
+          document.getElementById('leo-help-brain').textContent = item.brain;
+          document.getElementById('leo-help-wisdom').textContent = item.wisdom;
+          modalLeoHelp.classList.add('open');
+          playGentleClick();
+        }
+      }
+    });
+
+    const btnCloseHelp = document.getElementById('btn-close-leo-help');
+    if (btnCloseHelp && modalLeoHelp) {
+      btnCloseHelp.onclick = () => {
+        modalLeoHelp.classList.remove('open');
+      };
+    }
+
+    // Close modals on backdrop click or Escape
+    document.querySelectorAll('.zen-modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('open');
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.zen-modal-overlay').forEach(m => m.classList.remove('open'));
+        const drawer = document.getElementById('sanctuary-drawer-sheet');
+        if (drawer) drawer.classList.remove('active');
+      }
+    });
+
     // Settings Form
     document.getElementById('settings-checking-field').value = (state.checkingCents / 100).toFixed(2);
     document.getElementById('settings-cycle-field').value = state.incomeCycle || 'biweekly';

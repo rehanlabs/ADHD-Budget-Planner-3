@@ -1,14 +1,14 @@
 /* =========================================================
-   ADHD Budget Planner (Edition 3) - Leo's Step-by-Step Tour
-   Serene hand-holding: DOM spotlights, typing simulation, zero modal overlap
+   ADHD Budget Planner (Edition 3) - Leo's Step-by-Step Tour & Mindful Guide
+   Wabi-Sabi Warm Terracotta: Zero-blur crystal clarity, DOM-anchored,
+   gentle ADHD guardrails, 100% mobile portrait responsive.
    ========================================================= */
 
+/* Ambient tint: crystal clear, zero blur */
 .tutorial-mask-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(18, 29, 25, 0.45);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  background: rgba(18, 29, 25, 0.15);
   z-index: 9000;
   pointer-events: none;
   opacity: 0;
@@ -19,27 +19,33 @@
   opacity: 1;
 }
 
-/* Spotlight element */
+/* Guardrail when tour is active */
+body.tutorial-active .zen-floating-island .island-tab {
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+/* DOM-Anchored Target Spotlight */
 .tutorial-target-active {
   position: relative !important;
   z-index: 9200 !important;
-  outline: 3px solid #14b8a6 !important;
+  outline: 2.5px solid #e07a5f !important;
   outline-offset: 3px !important;
-  box-shadow: 0 0 0 8px rgba(20, 184, 166, 0.25), 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 0 0 6px rgba(224, 122, 95, 0.25), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
   animation: leoTargetPulse 2s infinite ease-in-out !important;
 }
 
 @keyframes leoTargetPulse {
-  0%, 100% { outline-color: #14b8a6; }
-  50% { outline-color: #5eead4; }
+  0%, 100% { outline-color: #e07a5f; }
+  50% { outline-color: #f2cc8f; }
 }
 
 /* Anchored Leo Target Badge */
 .leo-target-badge {
   position: absolute;
   top: -12px;
-  right: -8px;
-  background: #14b8a6;
+  right: 12px;
+  background: linear-gradient(135deg, #e07a5f, #ba5338);
   color: #ffffff;
   font-size: 11px;
   font-weight: 800;
@@ -47,16 +53,17 @@
   border-radius: 999px;
   display: flex;
   align-items: center;
-  gap: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  gap: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   pointer-events: none;
   z-index: 9210;
   white-space: nowrap;
   animation: leoBadgePop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.zen-tab .leo-target-badge {
-  top: -10px;
+/* Special centering for curved island navigation tabs */
+.island-tab .leo-target-badge {
+  top: -12px;
   right: auto;
   left: 50%;
   transform: translateX(-50%);
@@ -69,32 +76,88 @@
 
 /* Typing animation highlight */
 .typing-active {
-  outline: 2px solid #14b8a6 !important;
-  background: rgba(20, 184, 166, 0.15) !important;
+  outline: 2px solid #e07a5f !important;
+  background: rgba(224, 122, 95, 0.12) !important;
 }
 
-/* Floating Tour Guide Card */
+/* Top Tutorial HUD Bar */
+.tutorial-hud-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: rgba(26, 21, 18, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(224, 122, 95, 0.3);
+  color: #fbf7f4;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9700;
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.tutorial-hud-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.tutorial-hud-step-pill {
+  background: rgba(224, 122, 95, 0.2);
+  color: #e07a5f;
+  border: 1px solid rgba(224, 122, 95, 0.3);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.tutorial-hud-exit {
+  background: rgba(43, 34, 30, 0.8);
+  border: 1px solid rgba(224, 122, 95, 0.3);
+  color: #dfd5ce;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tutorial-hud-exit:hover {
+  background: rgba(61, 48, 42, 0.9);
+  color: #ffffff;
+  border-color: #f2cc8f;
+}
+
+/* Floating Tour Guide Card (Mobile-First, Safe Above Floating Island) */
 .leo-guide-card {
   position: fixed;
-  bottom: 84px;
+  bottom: calc(90px + env(safe-area-inset-bottom, 12px));
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 28px);
-  max-width: 520px;
-  background: #182a24;
-  border: 1px solid #14b8a6;
+  width: calc(100% - 24px);
+  max-width: 460px;
+  background: rgba(30, 24, 21, 0.96);
+  border: 1.5px solid #e07a5f;
   border-radius: 20px;
-  padding: 18px 20px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-  z-index: 9500;
+  padding: 14px 16px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.65), 0 0 20px rgba(224, 122, 95, 0.15);
+  z-index: 9600;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  animation: leoCardSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  gap: 10px;
+  animation: leoCardSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes leoCardSlideUp {
-  from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+  from { transform: translateX(-50%) translateY(16px); opacity: 0; }
   to { transform: translateX(-50%) translateY(0); opacity: 1; }
 }
 
@@ -102,6 +165,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid rgba(224, 122, 95, 0.15);
+  padding-bottom: 8px;
 }
 
 .leo-guide-identity {
@@ -112,74 +177,166 @@
 
 .leo-avatar {
   font-size: 20px;
+  line-height: 1;
 }
 
 .leo-name {
   font-size: 13px;
   font-weight: 800;
-  color: #14b8a6;
+  color: #e07a5f;
 }
 
 .leo-step-counter {
   font-size: 11px;
-  font-weight: 700;
-  color: #a7f3d0;
-  background: rgba(20, 184, 166, 0.18);
+  font-weight: 800;
+  color: #f2cc8f;
+  background: rgba(242, 204, 143, 0.15);
   padding: 2px 8px;
-  border-radius: 99px;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 204, 143, 0.25);
 }
 
 .leo-guide-body {
   font-size: 13px;
-  line-height: 1.6;
-  color: #f2fbf7;
+  line-height: 1.5;
+  color: #dfd5ce;
 }
 
 .leo-guide-body strong {
-  color: #fde047;
+  color: #ffffff;
 }
 
 .leo-guide-actions {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
   margin-top: 4px;
 }
 
 .leo-btn-secondary {
-  background: none;
-  border: none;
-  color: #5eead4;
+  background: rgba(43, 34, 30, 0.6);
+  border: 1px solid rgba(224, 122, 95, 0.25);
+  color: #c4b5ac;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 6px 10px;
+  transition: all 0.15s ease;
+}
+
+.leo-btn-secondary:hover {
+  background: rgba(61, 48, 42, 0.8);
+  color: #ffffff;
 }
 
 .leo-btn-primary {
-  background: #14b8a6;
+  background: linear-gradient(135deg, #e07a5f, #ba5338);
+  border: 1px solid rgba(242, 204, 143, 0.3);
   color: #ffffff;
-  border: none;
   font-size: 12px;
   font-weight: 800;
-  padding: 8px 18px;
-  border-radius: 99px;
+  padding: 7px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: transform 0.15s ease;
+  box-shadow: 0 4px 12px rgba(224, 122, 95, 0.35);
+  transition: all 0.15s ease;
 }
 
 .leo-btn-primary:hover {
-  transform: scale(1.03);
+  opacity: 0.95;
+  transform: translateY(-1px);
 }
 
-.leo-btn-primary.pulse {
-  animation: leoBtnPulse 1.6s infinite;
+/* =========================================================
+   ZEN CONTEXTUAL HELP SYSTEM (Question Mark Badges & Modal)
+   ========================================================= */
+
+.zen-help-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(224, 122, 95, 0.15);
+  border: 1px solid rgba(224, 122, 95, 0.35);
+  color: #e07a5f;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
-@keyframes leoBtnPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.7); }
-  50% { box-shadow: 0 0 0 10px rgba(20, 184, 166, 0); }
+.zen-help-badge:hover {
+  background: rgba(224, 122, 95, 0.3);
+  color: #ffffff;
+  border-color: #f2cc8f;
+  transform: scale(1.08);
+}
+
+/* Modal Contextual Guide Layout */
+#modal-leo-help .zen-modal-box {
+  background: rgba(30, 24, 21, 0.98);
+  border: 1.5px solid rgba(224, 122, 95, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  max-width: 480px;
+  width: 100%;
+  padding: 20px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.leo-help-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(224, 122, 95, 0.2);
+}
+
+.leo-help-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #fbf7f4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.leo-help-tiers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.leo-help-tier {
+  background: rgba(43, 34, 30, 0.65);
+  border: 1px solid rgba(224, 122, 95, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.leo-tier-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #e07a5f;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.leo-tier-content {
+  font-size: 13px;
+  color: #dfd5ce;
+  line-height: 1.5;
 }

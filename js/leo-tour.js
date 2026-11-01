@@ -1,6 +1,7 @@
 /**
- * ADHD Budget Planner (Edition 3) - Leo's Step-by-Step Tour System
- * Serene hand-holding: DOM spotlights, typing simulation, and safe demo mode.
+ * ADHD Budget Planner (Edition 3) - Leo's Step-by-Step Guided Tour System
+ * Mindful hand-holding: step-by-step DOM spotlight, HUD banner, typing simulation,
+ * and zero-blur crystal clarity.
  */
 (function (global) {
   'use strict';
@@ -12,7 +13,7 @@
 
   const wait = (ms) => new Promise(r => setTimeout(r, ms));
 
-  function highlightTarget(target, badgeText = '🧑‍💼 Leo says: Tap here') {
+  function highlightTarget(target, badgeText = '🧘 Tap here') {
     clearHighlight();
     if (!target) return null;
     const el = (typeof target === 'string') ? document.querySelector(target) : target;
@@ -56,6 +57,10 @@
     }
     document.querySelectorAll('.tutorial-target-active').forEach(el => {
       el.classList.remove('tutorial-target-active');
+      if (el.dataset.origPos === 'static') {
+        el.style.position = '';
+        delete el.dataset.origPos;
+      }
     });
     const b = document.getElementById('leo-target-badge');
     if (b) b.remove();
@@ -63,77 +68,117 @@
 
   const TOUR_STEPS = [
     {
-      title: 'Welcome to Financial Serenity 🌿',
-      body: 'Hello, I’m Leo! You don’t need to force your brain to enjoy spreadsheets. ADHD Budget Planner keeps your finances peaceful by distilling everything down to <strong>one daily dial</strong>.',
+      title: 'Greetings, I’m Leo 🌿',
+      body: 'Traditional spreadsheets trigger ADHD dopamine depletion and anxiety. In our Wabi-Sabi Sanctuary, math flows peacefully behind the scenes so you only focus on <strong>one serene number</strong>.',
       target: null,
       badge: '',
-      actionText: 'Begin Tour ➔',
+      actionText: 'Begin Mindful Tour ➔',
       action: async (controller) => {
         controller.next();
       }
     },
     {
-      title: 'Your Daily Allowance Dial',
-      body: 'Look at the central dial. This is your safe allowance for today. Your upcoming rent, utilities, and debt commitments are already guarded behind the scenes.',
+      title: 'Mindful Daily Allowance & Dial',
+      body: 'Look at your center radial dial. This is your safe daily spending guide. It automatically protects upcoming rent, living costs, and debt before giving you today’s allowance.',
       target: '.radial-hero-card',
-      badge: '✨ The Safe Dial',
-      actionText: 'Next: Quick Spends ➔',
+      badge: '☀️ Daily Dial',
+      actionText: 'Next: Inflow Runway ➔',
       action: async (controller) => {
         controller.next();
       }
     },
     {
-      title: 'Vertical Quick Spends',
-      body: 'Routine daily spending doesn’t need tedious category selection. Tap Morning Fuel, Online Essentials, or Groceries with a single tap. Let’s do a demo tap on <strong>Morning Fuel</strong>!',
-      target: '.zen-quick-spends',
-      badge: '☕ Tap to Log',
-      actionText: 'Demo Tap $6.00 ☕',
+      title: 'Cash Inflow Stream & Runway',
+      body: 'Your income runway visualizes the gentle rhythm until your next paycheck arrives. Tap <strong>Adjust Inflow</strong> anytime to update your payday date and cash reserve.',
+      target: '.zen-inflow-card',
+      badge: '🌊 Inflow Stream',
+      actionText: 'Next: Spend Chips ➔',
       action: async (controller) => {
-        const btn = document.querySelector('.zen-chip-btn');
-        if (btn) btn.click();
-        await wait(300);
         controller.next();
       }
     },
     {
-      title: 'Living Costs (Fixed Bills)',
-      body: 'Tap <strong>Living Costs</strong>. This is where your shelter, heat, and phone commitments stay protected. When you get paid, money is automatically reserved for them first.',
-      target: '.island-tab[data-nav="living"], .zen-tab[data-nav="living"]',
+      title: 'Mindful 1-Tap Spend Chips',
+      body: 'No tedious receipt tracking or multi-tiered category menus. Grabbing tea, a snack, or fuel? One gentle tap records it and adjusts today’s dial instantly.',
+      target: '.quick-chips-row',
+      badge: '🍵 Tap to Record',
+      actionText: 'Next: Living Costs ➔',
+      action: async (controller) => {
+        controller.next();
+      }
+    },
+    {
+      title: 'Living Commitments (Fixed Bills)',
+      body: 'Switch to <strong>Living Costs</strong>. Essential obligations (rent, heat, subscriptions) are arranged chronologically. Only bills due before your next payday are held.',
+      target: '.island-tab[data-nav="living"]',
       badge: '🌾 View Living Costs',
-      actionText: 'Check Living Costs ➔',
+      actionText: 'Switch to Living ➔',
       action: async (controller) => {
-        const tab = document.querySelector('.island-tab[data-nav="living"], .zen-tab[data-nav="living"]');
+        const tab = document.querySelector('.island-tab[data-nav="living"]');
         if (tab) tab.click();
-        await wait(300);
+        await wait(250);
         controller.next();
       }
     },
     {
-      title: 'Cooldown Hold (48h Vault)',
-      body: 'Suddenly tempted by an online shopping impulse? Park it in <strong>Cooldown Hold</strong>. In 48 hours, the dopamine wave passes and 82% of impulses fade on their own!',
-      target: '.island-tab[data-nav="cooldown"], .zen-tab[data-nav="cooldown"]',
-      badge: '⏳ View Cooldown Hold',
-      actionText: 'Check Cooldown Hold ➔',
+      title: 'Cooldown Garden (48h Desire Pause)',
+      body: 'Sudden urge to buy something online? Plant it in the <strong>Cooldown Garden</strong>. In 48 hours, the dopamine wave fades and 82% of impulses vanish peacefully!',
+      target: '.island-tab[data-nav="cooldown"]',
+      badge: '⏳ Cooldown Garden',
+      actionText: 'Switch to Cooldown ➔',
       action: async (controller) => {
-        const tab = document.querySelector('.island-tab[data-nav="cooldown"], .zen-tab[data-nav="cooldown"]');
+        const tab = document.querySelector('.island-tab[data-nav="cooldown"]');
         if (tab) tab.click();
-        await wait(300);
+        await wait(250);
         controller.next();
       }
     },
     {
-      title: 'Fog Mode (Emergency Screen)',
-      body: 'Having a high-fog, burnout, or migraine day? Tap <strong>Fog Mode</strong> in the top bar. All complexity vanishes, showing only your safe spending number.',
+      title: 'Fog Mode (Low Sensory Sanctuary)',
+      body: 'Having an executive overload or migraine day? Tap <strong>Fog Mode</strong> in the top bar. All visual clutter melts away, showing only your safe spending number.',
       target: '#btn-fog-trigger',
-      badge: '🌫️ Low Bandwidth Mode',
-      actionText: 'Finish Tour 🧘',
+      badge: '🌫️ Sensory Calm',
+      actionText: 'Next: Tab Guides ➔',
       action: async (controller) => {
-        const tab = document.querySelector('.island-tab[data-nav="allowance"], .zen-tab[data-nav="allowance"]');
+        const tab = document.querySelector('.island-tab[data-nav="allowance"]');
         if (tab) tab.click();
+        await wait(250);
+        controller.next();
+      }
+    },
+    {
+      title: 'Instant Tab & Feature Guides ❓',
+      body: 'Notice the serene <strong>?</strong> badges on every screen and tab. Tap any <strong>?</strong> anytime to open a mindful guide explaining concepts and ADHD wisdom!',
+      target: '.zen-help-badge',
+      badge: '❓ Tap for Tab Info',
+      actionText: 'Complete Walkthrough 🧘',
+      action: async (controller) => {
         controller.finish();
       }
     }
   ];
+
+  function updateHudBar() {
+    let hud = document.getElementById('tutorial-hud-bar');
+    if (!hud) {
+      hud = document.createElement('div');
+      hud.id = 'tutorial-hud-bar';
+      hud.className = 'tutorial-hud-bar';
+      document.body.appendChild(hud);
+    }
+    hud.innerHTML = `
+      <div class="tutorial-hud-title">
+        <span>🧘</span>
+        <span>Leo Mindful Guide</span>
+        <span class="tutorial-hud-step-pill">Step ${currentStepIndex + 1} of ${TOUR_STEPS.length}</span>
+      </div>
+      <button type="button" class="tutorial-hud-exit" id="btn-hud-exit">Exit Tour ✕</button>
+    `;
+    const exitBtn = document.getElementById('btn-hud-exit');
+    if (exitBtn) {
+      exitBtn.onclick = () => endTour();
+    }
+  }
 
   function showTourCard(step, controller) {
     let card = document.getElementById('leo-guide-card');
@@ -147,18 +192,18 @@
     card.innerHTML = `
       <div class="leo-guide-header">
         <div class="leo-guide-identity">
-          <span class="leo-avatar">🧑‍💼</span>
-          <span class="leo-name">Leo’s Step-by-Step Tour</span>
+          <span class="leo-avatar">🧘</span>
+          <span class="leo-name">Leo’s Mindful Tour</span>
         </div>
-        <span class="leo-step-counter">Step ${currentStepIndex + 1} of ${TOUR_STEPS.length}</span>
+        <span class="leo-step-counter">Step ${currentStepIndex + 1} / ${TOUR_STEPS.length}</span>
       </div>
       <div class="leo-guide-body">
         <strong>${step.title}</strong><br>
         ${step.body}
       </div>
       <div class="leo-guide-actions">
-        <button type="button" class="leo-btn-secondary" id="btn-leo-skip">End Tour</button>
-        <button type="button" class="leo-btn-primary pulse" id="btn-leo-act">${step.actionText}</button>
+        <button type="button" class="leo-btn-secondary" id="btn-leo-skip">Exit Tour</button>
+        <button type="button" class="leo-btn-primary" id="btn-leo-act">${step.actionText}</button>
       </div>
     `;
 
@@ -172,6 +217,8 @@
       return;
     }
     const step = TOUR_STEPS[currentStepIndex];
+    updateHudBar();
+
     if (step.target) {
       highlightTarget(step.target, step.badge);
     } else {
@@ -195,6 +242,7 @@
     if (isTourActive) return;
     isTourActive = true;
     currentStepIndex = 0;
+    document.body.classList.add('tutorial-active');
 
     let mask = document.getElementById('leo-tour-mask');
     if (!mask) {
@@ -210,11 +258,25 @@
 
   function endTour() {
     isTourActive = false;
+    document.body.classList.remove('tutorial-active');
     clearHighlight();
+
+    const hud = document.getElementById('tutorial-hud-bar');
+    if (hud) hud.remove();
+
     const card = document.getElementById('leo-guide-card');
     if (card) card.remove();
+
     const mask = document.getElementById('leo-tour-mask');
     if (mask) mask.classList.remove('active');
+
+    try {
+      localStorage.setItem('leo_tour_completed', 'true');
+    } catch (e) {}
+
+    // Return to allowance screen smoothly
+    const allowTab = document.querySelector('.island-tab[data-nav="allowance"]');
+    if (allowTab) allowTab.click();
   }
 
   Leo.startTour = startTour;

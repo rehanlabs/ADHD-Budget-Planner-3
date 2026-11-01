@@ -128,6 +128,9 @@ assert(html.includes('id="screen-config"'), 'HTML contains #screen-config');
 assert(html.includes('id="fog-mode-overlay"'), 'HTML contains #fog-mode-overlay');
 assert(html.includes('id="modal-add-living"'), 'HTML contains modal #modal-add-living');
 assert(html.includes('id="modal-add-cooldown"'), 'HTML contains modal #modal-add-cooldown');
+assert(html.includes('id="modal-leo-help"'), 'HTML contains modal #modal-leo-help');
+assert(html.includes('class="zen-help-badge"'), 'HTML contains .zen-help-badge buttons');
+assert(html.includes('src="./js/leo-help.js"'), 'HTML references leo-help.js');
 
 // Hygiene check
 assert(!html.includes('NaN'), 'HTML contains no literal NaN text');
