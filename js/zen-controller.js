@@ -135,6 +135,39 @@
       });
     }
 
+    // Render Today's Logged Spends (with Undo / Remove button)
+    const todayBox = document.getElementById('zen-today-spends-container');
+    if (todayBox) {
+      const todayISO = new Date().toISOString().slice(0, 10);
+      const todayTxs = (state.transactions || []).filter(tx => tx.date === todayISO);
+      if (todayTxs.length === 0) {
+        todayBox.innerHTML = '';
+      } else {
+        todayBox.innerHTML = `
+          <div style="font-size:11px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin:4px 0 8px;">
+            🍵 Mindful Spends Today (${todayTxs.length})
+          </div>
+          ${todayTxs.map(tx => `
+            <div class="harmony-card" style="padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+              <div class="card-name" style="font-size:13.5px;margin:0;">${tx.title}</div>
+              <div class="card-actions-row">
+                <div class="card-val" style="font-size:13.5px;">-${CoreCalculator.formatCents(tx.amountCents, state.profile.currency)}</div>
+                <button type="button" class="btn-zen-card-delete" data-del-tx="${tx.id}" title="Undo / Remove Spend">&times;</button>
+              </div>
+            </div>
+          `).join('')}
+        `;
+        todayBox.querySelectorAll('[data-del-tx]').forEach(btn => {
+          btn.onclick = () => {
+            state.transactions = state.transactions.filter(t => t.id !== btn.dataset.delTx);
+            StateManager.saveState(state);
+            playGentleClick();
+            renderAllowance();
+          };
+        });
+      }
+    }
+
     // Update Fog Mode Screen Hero
     const fogAmt = document.getElementById('fog-screen-amount');
     if (fogAmt) {
@@ -156,11 +189,15 @@
           <div class="card-name">${b.name}</div>
           <div class="card-val">${CoreCalculator.formatCents(b.amountCents, state.profile.currency)}</div>
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:12px;color:var(--text-muted);">Due: ${b.dueDate}</span>
-          <button type="button" class="btn-harmony-action ${b.paid ? 'cleared' : ''}" data-pay-id="${b.id}">
-            ${b.paid ? 'Paid ✓' : 'Mark Paid'}
-          </button>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <span style="font-size:12px;color:var(--text-muted);">Due: ${b.dueDate} ${b.paid ? '• <span style="color:var(--accent-mint);font-weight:700;">✓ PAID</span>' : '• <span style="color:var(--accent-gold);">Reserved</span>'}</span>
+          <div class="card-actions-row">
+            <button type="button" class="btn-harmony-action ${b.paid ? 'cleared' : ''}" data-pay-id="${b.id}" title="Mark Paid or Unpaid">
+              ${b.paid ? '✓ Paid' : 'Mark Paid'}
+            </button>
+            <button type="button" class="btn-zen-card-edit" data-edit-living="${b.id}" title="Edit Cost">✏️ Edit</button>
+            <button type="button" class="btn-zen-card-delete" data-del-living="${b.id}" title="Remove Living Cost">&times;</button>
+          </div>
         </div>
       </div>
     `).join('');
@@ -175,6 +212,31 @@
           renderLivingCosts();
           renderAllowance();
         }
+      };
+    });
+
+    list.querySelectorAll('[data-edit-living]').forEach(btn => {
+      btn.onclick = () => {
+        const cost = state.livingCosts.find(c => c.id === btn.dataset.editLiving);
+        if (cost) {
+          const heading = document.getElementById('modal-living-heading');
+          if (heading) heading.textContent = '✏️ Edit Living Cost';
+          document.getElementById('living-edit-id').value = cost.id;
+          document.getElementById('living-name-field').value = cost.name;
+          document.getElementById('living-amt-field').value = (cost.amountCents / 100).toFixed(2);
+          document.getElementById('living-date-field').value = cost.dueDate;
+          document.getElementById('modal-add-living').classList.add('open');
+        }
+      };
+    });
+
+    list.querySelectorAll('[data-del-living]').forEach(btn => {
+      btn.onclick = () => {
+        state.livingCosts = state.livingCosts.filter(c => c.id !== btn.dataset.delLiving);
+        StateManager.saveState(state);
+        playGentleClick();
+        renderLivingCosts();
+        renderAllowance();
       };
     });
   }
@@ -196,11 +258,15 @@
             <div class="card-name">${item.name}</div>
             <div class="card-val">${CoreCalculator.formatCents(item.amountCents, state.profile.currency)}</div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
             <span style="font-size:12px;color:var(--accent-mint);">
               ${cd.isUnlocked ? '🔓 48h Passed — Urge resolved?' : `⏳ ${cd.remainingHours}h remaining`}
             </span>
-            <button type="button" class="btn-harmony-action" data-del-cooldown="${item.id}" style="background:#dc2626;">Dismiss</button>
+            <div class="card-actions-row">
+              <button type="button" class="btn-harmony-action cleared" data-del-cooldown="${item.id}" title="Let It Go (Save Money!)">🎉 Let It Go</button>
+              <button type="button" class="btn-zen-card-edit" data-buy-cooldown="${item.id}" title="Buy & Record Spend">🍵 Buy</button>
+              <button type="button" class="btn-zen-card-edit" data-edit-cooldown="${item.id}" title="Edit Item">✏️</button>
+            </div>
           </div>
         </div>
       `;
@@ -214,6 +280,40 @@
         renderCooldownHold();
       };
     });
+
+    list.querySelectorAll('[data-buy-cooldown]').forEach(btn => {
+      btn.onclick = () => {
+        const item = state.cooldownHoldItems.find(i => i.id === btn.dataset.buyCooldown);
+        if (item) {
+          state.transactions.unshift({
+            id: 'tx-' + Date.now(),
+            timestamp: Date.now(),
+            date: new Date().toISOString().slice(0, 10),
+            title: item.name,
+            amountCents: item.amountCents
+          });
+          state.cooldownHoldItems = state.cooldownHoldItems.filter(i => i.id !== item.id);
+          StateManager.saveState(state);
+          playGentleClick();
+          renderCooldownHold();
+          renderAllowance();
+        }
+      };
+    });
+
+    list.querySelectorAll('[data-edit-cooldown]').forEach(btn => {
+      btn.onclick = () => {
+        const item = state.cooldownHoldItems.find(i => i.id === btn.dataset.editCooldown);
+        if (item) {
+          const heading = document.getElementById('modal-cooldown-heading');
+          if (heading) heading.textContent = '✏️ Edit Cooldown Urge';
+          document.getElementById('cooldown-edit-id').value = item.id;
+          document.getElementById('cooldown-name-field').value = item.name;
+          document.getElementById('cooldown-amt-field').value = (item.amountCents / 100).toFixed(2);
+          document.getElementById('modal-add-cooldown').classList.add('open');
+        }
+      };
+    });
   }
 
   function renderDebtFreedom() {
@@ -221,7 +321,7 @@
     const list = document.getElementById('debt-list');
     if (!state.debts || state.debts.length === 0) {
       if (summary) summary.textContent = '🕊️ Zero liabilities. Peace achieved!';
-      if (list) list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">No debt obligations on your path.</p>`;
+      if (list) list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">No debt obligations on your path. Tap + Add Debt above to add accounts.</p>`;
       return;
     }
 
@@ -237,11 +337,42 @@
             <div class="card-name">${d.name}</div>
             <div class="card-val">${CoreCalculator.formatCents(d.balanceCents, state.profile.currency)}</div>
           </div>
-          <div style="font-size:12px;color:var(--text-muted);">
-            Min Payment: ${CoreCalculator.formatCents(d.minPaymentCents, state.profile.currency)}/mo (${d.interestRate}% APR)
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <div style="font-size:12px;color:var(--text-muted);">
+              Min Payment: ${CoreCalculator.formatCents(d.minPaymentCents, state.profile.currency)}/mo (${d.interestRate}% APR)
+            </div>
+            <div class="card-actions-row">
+              <button type="button" class="btn-zen-card-edit" data-edit-debt="${d.id}" title="Edit Debt">✏️ Edit</button>
+              <button type="button" class="btn-zen-card-delete" data-del-debt="${d.id}" title="Remove Debt">&times;</button>
+            </div>
           </div>
         </div>
       `).join('');
+
+      list.querySelectorAll('[data-edit-debt]').forEach(btn => {
+        btn.onclick = () => {
+          const d = state.debts.find(item => item.id === btn.dataset.editDebt);
+          if (d) {
+            const heading = document.getElementById('modal-zen-debt-heading');
+            if (heading) heading.textContent = '✏️ Edit Debt Obligation';
+            document.getElementById('debt-zen-edit-id').value = d.id;
+            document.getElementById('debt-zen-name-field').value = d.name;
+            document.getElementById('debt-zen-balance-field').value = (d.balanceCents / 100).toFixed(2);
+            document.getElementById('debt-zen-min-field').value = (d.minPaymentCents / 100).toFixed(2);
+            document.getElementById('debt-zen-apr-field').value = d.interestRate;
+            document.getElementById('modal-add-zen-debt').classList.add('open');
+          }
+        };
+      });
+
+      list.querySelectorAll('[data-del-debt]').forEach(btn => {
+        btn.onclick = () => {
+          state.debts = state.debts.filter(item => item.id !== btn.dataset.delDebt);
+          StateManager.saveState(state);
+          playGentleClick();
+          renderDebtFreedom();
+        };
+      });
     }
   }
 
@@ -252,6 +383,21 @@
     }
   }
 
+  function renderConfig() {
+    const chkInput = document.getElementById('settings-checking-field');
+    if (chkInput && state) {
+      chkInput.value = (state.checkingCents / 100).toFixed(2);
+    }
+    const cycSelect = document.getElementById('settings-cycle-field');
+    if (cycSelect && state) {
+      cycSelect.value = state.incomeCycle || 'biweekly';
+    }
+    const themeSelect = document.getElementById('settings-theme-field');
+    if (themeSelect && state && state.profile) {
+      themeSelect.value = state.profile.theme || 'sage-harmony';
+    }
+  }
+
   function renderCurrentScreen() {
     renderHeader();
     if (currentScreen === 'allowance') renderAllowance();
@@ -259,6 +405,7 @@
     if (currentScreen === 'cooldown') renderCooldownHold();
     if (currentScreen === 'freedom') renderDebtFreedom();
     if (currentScreen === 'minddump') renderMindDump();
+    if (currentScreen === 'config') renderConfig();
   }
 
   function bindUI() {
@@ -328,6 +475,7 @@
       modalInflow.classList.remove('open');
       playGentleClick();
       renderAllowance();
+      renderConfig();
     };
 
     // Center Raised Seed FAB (Quick Custom Spend)
@@ -368,8 +516,14 @@
       };
     }
 
-    // Add Living Cost Modal
+    // Add / Edit Living Cost Modal
     document.getElementById('btn-add-living-open').onclick = () => {
+      const heading = document.getElementById('modal-living-heading');
+      if (heading) heading.textContent = '📅 Add Living Cost';
+      document.getElementById('living-edit-id').value = '';
+      document.getElementById('living-name-field').value = '';
+      document.getElementById('living-amt-field').value = '';
+      document.getElementById('living-date-field').value = new Date().toISOString().slice(0, 10);
       document.getElementById('modal-add-living').classList.add('open');
     };
     document.getElementById('btn-add-living-close').onclick = () => {
@@ -377,17 +531,27 @@
     };
     document.getElementById('form-add-living').onsubmit = (e) => {
       e.preventDefault();
-      const name = document.getElementById('living-name-field').value;
+      const editId = document.getElementById('living-edit-id').value;
+      const name = document.getElementById('living-name-field').value.trim();
       const amt = CoreCalculator.parseToCents(document.getElementById('living-amt-field').value);
       const date = document.getElementById('living-date-field').value;
       if (name && amt > 0 && date) {
-        state.livingCosts.push({
-          id: 'lc-' + Date.now(),
-          name: name,
-          amountCents: amt,
-          dueDate: date,
-          paid: false
-        });
+        if (editId) {
+          const cost = state.livingCosts.find(c => c.id === editId);
+          if (cost) {
+            cost.name = name;
+            cost.amountCents = amt;
+            cost.dueDate = date;
+          }
+        } else {
+          state.livingCosts.push({
+            id: 'lc-' + Date.now(),
+            name: name,
+            amountCents: amt,
+            dueDate: date,
+            paid: false
+          });
+        }
         StateManager.saveState(state);
         document.getElementById('modal-add-living').classList.remove('open');
         playGentleClick();
@@ -396,8 +560,13 @@
       }
     };
 
-    // Add Cooldown Modal
+    // Add / Edit Cooldown Modal
     document.getElementById('btn-add-cooldown-open').onclick = () => {
+      const heading = document.getElementById('modal-cooldown-heading');
+      if (heading) heading.textContent = '⏳ Park in 48-Hour Cooldown Hold';
+      document.getElementById('cooldown-edit-id').value = '';
+      document.getElementById('cooldown-name-field').value = '';
+      document.getElementById('cooldown-amt-field').value = '';
       document.getElementById('modal-add-cooldown').classList.add('open');
     };
     document.getElementById('btn-add-cooldown-close').onclick = () => {
@@ -405,21 +574,87 @@
     };
     document.getElementById('form-add-cooldown').onsubmit = (e) => {
       e.preventDefault();
-      const name = document.getElementById('cooldown-name-field').value;
+      const editId = document.getElementById('cooldown-edit-id').value;
+      const name = document.getElementById('cooldown-name-field').value.trim();
       const amt = CoreCalculator.parseToCents(document.getElementById('cooldown-amt-field').value);
       if (name && amt > 0) {
-        state.cooldownHoldItems.push({
-          id: 'ch-' + Date.now(),
-          name: name,
-          amountCents: amt,
-          parkedAt: Date.now()
-        });
+        if (editId) {
+          const item = state.cooldownHoldItems.find(i => i.id === editId);
+          if (item) {
+            item.name = name;
+            item.amountCents = amt;
+          }
+        } else {
+          state.cooldownHoldItems.push({
+            id: 'ch-' + Date.now(),
+            name: name,
+            amountCents: amt,
+            parkedAt: Date.now()
+          });
+        }
         StateManager.saveState(state);
         document.getElementById('modal-add-cooldown').classList.remove('open');
         playGentleClick();
         renderCooldownHold();
       }
     };
+
+    // Add / Edit Debt Modal
+    const modalZenDebt = document.getElementById('modal-add-zen-debt');
+    const btnOpenAddDebt = document.getElementById('btn-add-debt-open');
+    if (btnOpenAddDebt && modalZenDebt) {
+      btnOpenAddDebt.onclick = () => {
+        const heading = document.getElementById('modal-zen-debt-heading');
+        if (heading) heading.textContent = '📉 Add Debt Obligation';
+        document.getElementById('debt-zen-edit-id').value = '';
+        document.getElementById('debt-zen-name-field').value = '';
+        document.getElementById('debt-zen-balance-field').value = '';
+        document.getElementById('debt-zen-min-field').value = '';
+        document.getElementById('debt-zen-apr-field').value = '';
+        modalZenDebt.classList.add('open');
+      };
+    }
+    const btnCloseAddDebt = document.getElementById('btn-add-debt-close');
+    if (btnCloseAddDebt && modalZenDebt) {
+      btnCloseAddDebt.onclick = () => {
+        modalZenDebt.classList.remove('open');
+      };
+    }
+    const formAddDebt = document.getElementById('form-add-zen-debt');
+    if (formAddDebt && modalZenDebt) {
+      formAddDebt.onsubmit = (e) => {
+        e.preventDefault();
+        const editId = document.getElementById('debt-zen-edit-id').value;
+        const name = document.getElementById('debt-zen-name-field').value.trim();
+        const bal = CoreCalculator.parseToCents(document.getElementById('debt-zen-balance-field').value);
+        const min = CoreCalculator.parseToCents(document.getElementById('debt-zen-min-field').value);
+        const apr = parseFloat(document.getElementById('debt-zen-apr-field').value) || 0;
+        if (name && bal > 0) {
+          if (!state.debts) state.debts = [];
+          if (editId) {
+            const d = state.debts.find(item => item.id === editId);
+            if (d) {
+              d.name = name;
+              d.balanceCents = bal;
+              d.minPaymentCents = min;
+              d.interestRate = apr;
+            }
+          } else {
+            state.debts.push({
+              id: 'debt-' + Date.now(),
+              name: name,
+              balanceCents: bal,
+              minPaymentCents: min,
+              interestRate: apr
+            });
+          }
+          StateManager.saveState(state);
+          modalZenDebt.classList.remove('open');
+          playGentleClick();
+          renderDebtFreedom();
+        }
+      };
+    }
 
     // Leo Contextual Help Badges Modal
     const modalLeoHelp = document.getElementById('modal-leo-help');
@@ -479,6 +714,7 @@
       StateManager.saveState(state);
       playGentleClick();
       renderAllowance();
+      renderConfig();
       alert('Sanctuary config saved successfully.');
     };
 

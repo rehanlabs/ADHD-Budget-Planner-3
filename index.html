@@ -98,6 +98,8 @@
           <!-- 3 stacked vertical pills populated dynamically -->
         </div>
 
+        <div id="zen-today-spends-container"></div>
+
         <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:18px;padding:16px;margin-top:14px;">
           <div style="font-size:13px;font-weight:700;color:var(--accent-sage);margin-bottom:6px;">🧘 Leo's Mindful Note:</div>
           <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">
@@ -142,12 +144,15 @@
 
       <!-- 4. Debt Freedom Screen -->
       <section id="screen-freedom" class="screen">
-        <div style="margin-bottom:16px;">
-          <div style="display:flex;align-items:center;gap:6px;">
-            <h2 style="font-size:18px;font-weight:800;">Debt Freedom (Crusher)</h2>
-            <button type="button" class="zen-help-badge" data-leo-help="freedom.ladder" title="About Freedom Ladder">?</button>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <h2 style="font-size:18px;font-weight:800;">Debt Freedom (Crusher)</h2>
+              <button type="button" class="zen-help-badge" data-leo-help="freedom.ladder" title="About Freedom Ladder">?</button>
+            </div>
+            <p style="font-size:12px;color:var(--text-muted);">Snowball & Avalanche accelerated debt freedom path.</p>
           </div>
-          <p style="font-size:12px;color:var(--text-muted);">Snowball & Avalanche accelerated debt freedom path.</p>
+          <button type="button" class="btn-harmony-action" id="btn-add-debt-open">+ Add Debt</button>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:18px;padding:18px;text-align:center;margin-bottom:16px;">
           <div style="font-size:11px;font-weight:700;color:var(--accent-gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Freedom Projection</div>
@@ -340,14 +345,15 @@
       </div>
     </div>
 
-    <!-- MODAL: Add Living Cost -->
+    <!-- MODAL: Add / Edit Living Cost -->
     <div id="modal-add-living" class="zen-modal-overlay">
       <div class="zen-modal-box">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-          <h3 style="font-size:16px;font-weight:800;">📅 Add Living Cost</h3>
+          <h3 style="font-size:16px;font-weight:800;" id="modal-living-heading">📅 Add Living Cost</h3>
           <button type="button" class="btn-zen-icon" id="btn-add-living-close" style="width:28px;height:28px;">&times;</button>
         </div>
         <form id="form-add-living">
+          <input type="hidden" id="living-edit-id" value="">
           <div class="zen-form-group">
             <label>Living Cost Name (e.g. Rent, Electricity, Internet)</label>
             <input type="text" class="zen-input" id="living-name-field" placeholder="Housing Rent" required>
@@ -360,19 +366,20 @@
             <label>Due Date</label>
             <input type="date" class="zen-input" id="living-date-field" required>
           </div>
-          <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Add Living Cost 🌿</button>
+          <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Save Living Cost 🌿</button>
         </form>
       </div>
     </div>
 
-    <!-- MODAL: Add Cooldown Item -->
+    <!-- MODAL: Add / Edit Cooldown Item -->
     <div id="modal-add-cooldown" class="zen-modal-overlay">
       <div class="zen-modal-box">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-          <h3 style="font-size:16px;font-weight:800;">⏳ Park in 48-Hour Cooldown Hold</h3>
+          <h3 style="font-size:16px;font-weight:800;" id="modal-cooldown-heading">⏳ Park in 48-Hour Cooldown Hold</h3>
           <button type="button" class="btn-zen-icon" id="btn-add-cooldown-close" style="width:28px;height:28px;">&times;</button>
         </div>
         <form id="form-add-cooldown">
+          <input type="hidden" id="cooldown-edit-id" value="">
           <div class="zen-form-group">
             <label>Item Name / Purchase Urge</label>
             <input type="text" class="zen-input" id="cooldown-name-field" placeholder="Ergonomic Keyboard" required>
@@ -381,7 +388,37 @@
             <label>Price ($)</label>
             <input type="number" step="0.01" class="zen-input" id="cooldown-amt-field" placeholder="89.00" required>
           </div>
-          <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Hold Urge for 48 Hours ⏳</button>
+          <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Hold Urge in Cooldown ⏳</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL: Add / Edit Debt -->
+    <div id="modal-add-zen-debt" class="zen-modal-overlay">
+      <div class="zen-modal-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="font-size:16px;font-weight:800;" id="modal-zen-debt-heading">📉 Add Debt Obligation</h3>
+          <button type="button" class="btn-zen-icon" id="btn-add-debt-close" style="width:28px;height:28px;">&times;</button>
+        </div>
+        <form id="form-add-zen-debt">
+          <input type="hidden" id="debt-zen-edit-id" value="">
+          <div class="zen-form-group">
+            <label>Debt Name (e.g. Credit Card, Student Loan)</label>
+            <input type="text" class="zen-input" id="debt-zen-name-field" placeholder="Mastercard" required>
+          </div>
+          <div class="zen-form-group">
+            <label>Current Balance ($)</label>
+            <input type="number" step="0.01" class="zen-input" id="debt-zen-balance-field" placeholder="950.00" required>
+          </div>
+          <div class="zen-form-group">
+            <label>Minimum Monthly Payment ($)</label>
+            <input type="number" step="0.01" class="zen-input" id="debt-zen-min-field" placeholder="40.00" required>
+          </div>
+          <div class="zen-form-group">
+            <label>Interest Rate (APR %)</label>
+            <input type="number" step="0.1" class="zen-input" id="debt-zen-apr-field" placeholder="18.5" required>
+          </div>
+          <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Save Debt Obligation 🌿</button>
         </form>
       </div>
     </div>
