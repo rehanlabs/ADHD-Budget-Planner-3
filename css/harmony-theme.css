@@ -1,80 +1,80 @@
-/* ADHD Budget Planner - Harmony Theme Definitions (Edition 3) */
+/* ADHD Budget Planner - Harmony Theme Definitions (Edition 3: Warm Editorial Wabi-Sabi & Terracotta Luxe) */
 :root {
-  --font-zen: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+  --font-zen: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', serif, sans-serif;
   --font-digits: 'SF Mono', 'Roboto Mono', 'Courier New', monospace;
   --radius-zen: 20px;
-  --radius-pill: 99px;
+  --radius-pill: 999px;
   --transition-smooth: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 1. Sage Harmony (Default) */
+/* 1. Sage Harmony (Default: Warm Espresso Cacao & Terracotta Linen) */
 body[data-theme="sage-harmony"] {
-  --bg-zen: #111d19;
-  --bg-card: #182a24;
-  --bg-chip: #213a32;
-  --bg-chip-hover: #2a493f;
-  --border-zen: #29473d;
-  --border-glow: #14b8a6;
-  --text-zen: #f2fbf7;
-  --text-muted: #a7f3d0;
-  --text-hint: #6ee7b7;
-  --accent-sage: #14b8a6;
-  --accent-mint: #5eead4;
-  --accent-gold: #fde047;
-  --accent-rose: #f43f5e;
-  --zen-shadow: 0 10px 30px rgba(20, 184, 166, 0.12);
+  --bg-zen: #161311;
+  --bg-card: #221c19;
+  --bg-chip: #2c2420;
+  --bg-chip-hover: #3a302a;
+  --border-zen: rgba(224, 122, 95, 0.24);
+  --border-glow: #e07a5f;
+  --text-zen: #faf6ee;
+  --text-muted: #d5c8be;
+  --text-hint: #a6988d;
+  --accent-sage: #e07a5f;
+  --accent-mint: #81b29a;
+  --accent-gold: #f2cc8f;
+  --accent-rose: #e63946;
+  --zen-shadow: 0 14px 34px -8px rgba(224, 122, 95, 0.18);
 }
 
-/* 2. OLED Minimal */
+/* 2. OLED Minimal (Dark Roast Minimal with Warm Gold Accents) */
 body[data-theme="oled-minimal"] {
-  --bg-zen: #050505;
-  --bg-card: #111111;
-  --bg-chip: #1c1c1c;
-  --bg-chip-hover: #262626;
-  --border-zen: #2a2a2a;
-  --border-glow: #5eead4;
+  --bg-zen: #0c0908;
+  --bg-card: #171311;
+  --bg-chip: #211c19;
+  --bg-chip-hover: #2e2723;
+  --border-zen: #302621;
+  --border-glow: #f2cc8f;
   --text-zen: #ffffff;
-  --text-muted: #a3a3a3;
-  --text-hint: #737373;
-  --accent-sage: #5eead4;
-  --accent-mint: #2dd4bf;
-  --accent-gold: #fde047;
-  --accent-rose: #f43f5e;
-  --zen-shadow: none;
+  --text-muted: #b8aba2;
+  --text-hint: #7f736b;
+  --accent-sage: #e07a5f;
+  --accent-mint: #81b29a;
+  --accent-gold: #f2cc8f;
+  --accent-rose: #e63946;
+  --zen-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* 3. Sand & Linen (Gentle Light) */
+/* 3. Sand & Linen (Gentle Light Editorial) */
 body[data-theme="sand-linen"] {
-  --bg-zen: #fbf9f5;
+  --bg-zen: #faf7f2;
   --bg-card: #ffffff;
-  --bg-chip: #f4eee6;
-  --bg-chip-hover: #ebdcd0;
-  --border-zen: #e6ded5;
-  --border-glow: #0d9488;
-  --text-zen: #2d2621;
-  --text-muted: #645b54;
-  --text-hint: #8c8077;
-  --accent-sage: #0d9488;
-  --accent-mint: #14b8a6;
-  --accent-gold: #d97706;
-  --accent-rose: #e11d48;
-  --zen-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --bg-chip: #f3ede4;
+  --bg-chip-hover: #e8ded2;
+  --border-zen: #e2d7cb;
+  --border-glow: #e07a5f;
+  --text-zen: #231e1b;
+  --text-muted: #574c44;
+  --text-hint: #82756c;
+  --accent-sage: #c25e3e;
+  --accent-mint: #588157;
+  --accent-gold: #d4a373;
+  --accent-rose: #bc4749;
+  --zen-shadow: 0 8px 24px rgba(35, 30, 27, 0.06);
 }
 
-/* 4. Ocean Calm */
+/* 4. Ocean Calm (Deep Forest Matcha & Sage Sanctuary) */
 body[data-theme="ocean-calm"] {
-  --bg-zen: #0f172a;
-  --bg-card: #1e293b;
-  --bg-chip: #334155;
-  --bg-chip-hover: #475569;
-  --border-zen: #334155;
-  --border-glow: #38bdf8;
-  --text-zen: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-hint: #64748b;
-  --accent-sage: #0284c7;
-  --accent-mint: #38bdf8;
-  --accent-gold: #fbbf24;
-  --accent-rose: #f43f5e;
-  --zen-shadow: 0 10px 30px rgba(2, 132, 199, 0.15);
+  --bg-zen: #101915;
+  --bg-card: #182620;
+  --bg-chip: #22352d;
+  --bg-chip-hover: #2c443a;
+  --border-zen: rgba(129, 178, 154, 0.25);
+  --border-glow: #81b29a;
+  --text-zen: #f2faf6;
+  --text-muted: #bad9cb;
+  --text-hint: #7ca895;
+  --accent-sage: #81b29a;
+  --accent-mint: #a8d5ba;
+  --accent-gold: #f2cc8f;
+  --accent-rose: #e63946;
+  --zen-shadow: 0 14px 34px -8px rgba(129, 178, 154, 0.2);
 }

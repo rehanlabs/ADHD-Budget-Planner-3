@@ -1,0 +1,185 @@
+/* =========================================================
+   ADHD Budget Planner (Edition 3) - Leo's Step-by-Step Tour
+   Serene hand-holding: DOM spotlights, typing simulation, zero modal overlap
+   ========================================================= */
+
+.tutorial-mask-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 29, 25, 0.45);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.tutorial-mask-overlay.active {
+  opacity: 1;
+}
+
+/* Spotlight element */
+.tutorial-target-active {
+  position: relative !important;
+  z-index: 9200 !important;
+  outline: 3px solid #14b8a6 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 8px rgba(20, 184, 166, 0.25), 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  animation: leoTargetPulse 2s infinite ease-in-out !important;
+}
+
+@keyframes leoTargetPulse {
+  0%, 100% { outline-color: #14b8a6; }
+  50% { outline-color: #5eead4; }
+}
+
+/* Anchored Leo Target Badge */
+.leo-target-badge {
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  background: #14b8a6;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 9210;
+  white-space: nowrap;
+  animation: leoBadgePop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.zen-tab .leo-target-badge {
+  top: -10px;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes leoBadgePop {
+  from { transform: scale(0.7) translateY(4px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Typing animation highlight */
+.typing-active {
+  outline: 2px solid #14b8a6 !important;
+  background: rgba(20, 184, 166, 0.15) !important;
+}
+
+/* Floating Tour Guide Card */
+.leo-guide-card {
+  position: fixed;
+  bottom: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  max-width: 520px;
+  background: #182a24;
+  border: 1px solid #14b8a6;
+  border-radius: 20px;
+  padding: 18px 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  z-index: 9500;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: leoCardSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes leoCardSlideUp {
+  from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+.leo-guide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leo-guide-identity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.leo-avatar {
+  font-size: 20px;
+}
+
+.leo-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #14b8a6;
+}
+
+.leo-step-counter {
+  font-size: 11px;
+  font-weight: 700;
+  color: #a7f3d0;
+  background: rgba(20, 184, 166, 0.18);
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.leo-guide-body {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #f2fbf7;
+}
+
+.leo-guide-body strong {
+  color: #fde047;
+}
+
+.leo-guide-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.leo-btn-secondary {
+  background: none;
+  border: none;
+  color: #5eead4;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 10px;
+}
+
+.leo-btn-primary {
+  background: #14b8a6;
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 8px 18px;
+  border-radius: 99px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease;
+}
+
+.leo-btn-primary:hover {
+  transform: scale(1.03);
+}
+
+.leo-btn-primary.pulse {
+  animation: leoBtnPulse 1.6s infinite;
+}
+
+@keyframes leoBtnPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.7); }
+  50% { box-shadow: 0 0 0 10px rgba(20, 184, 166, 0); }
+}

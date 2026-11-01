@@ -1,44 +1,72 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
-    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#121d19"/>
-      <stop offset="100%" stop-color="#0a1210"/>
+    <!-- Background Gradient: Warm Roasted Espresso Cacao -->
+    <linearGradient id="bgWarmZen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#241a15"/>
+      <stop offset="50%" stop-color="#181310"/>
+      <stop offset="100%" stop-color="#100c0a"/>
     </linearGradient>
-    <linearGradient id="sageHorizon3" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#5eead4"/>
-      <stop offset="100%" stop-color="#0d9488"/>
+
+    <!-- Warm Italian Terracotta Gradient -->
+    <linearGradient id="terracottaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f49c7f"/>
+      <stop offset="50%" stop-color="#e07a5f"/>
+      <stop offset="100%" stop-color="#ba5338"/>
     </linearGradient>
-    <linearGradient id="goldSun3" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fef08a"/>
-      <stop offset="50%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#b45309"/>
+
+    <!-- Matcha Sage Zen Balance Gradient -->
+    <linearGradient id="matchaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a8d5ba"/>
+      <stop offset="100%" stop-color="#81b29a"/>
     </linearGradient>
-    <filter id="softGlow3" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="12" result="blur"/>
+
+    <!-- Gentle Warm Sun Gold -->
+    <linearGradient id="warmSunGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff1c5"/>
+      <stop offset="50%" stop-color="#f2cc8f"/>
+      <stop offset="100%" stop-color="#d4a359"/>
+    </linearGradient>
+
+    <!-- Organic Zen Glow Filter -->
+    <filter id="warmZenGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
       <feComposite in="SourceGraphic" in2="blur" operator="over"/>
     </filter>
   </defs>
 
-  <!-- App Rounded Squircle Background -->
-  <rect width="512" height="512" rx="112" fill="url(#bgGrad3)"/>
+  <!-- App Rounded Squircle Container -->
+  <rect width="512" height="512" rx="112" fill="url(#bgWarmZen)"/>
   
-  <!-- Subtle organic inner boundary -->
-  <rect x="14" y="14" width="484" height="484" rx="98" fill="none" stroke="#1b382d" stroke-width="3" opacity="0.6"/>
+  <!-- Outer Linen Border Hairline -->
+  <rect x="14" y="14" width="484" height="484" rx="98" fill="none" stroke="rgba(224, 122, 95, 0.28)" stroke-width="2.5"/>
 
-  <!-- Serene Rising Horizon Arch (Financial Peace & Clarity) -->
-  <path d="M112 360 C112 240 400 240 400 360" fill="none" stroke="#164e3b" stroke-width="8" stroke-linecap="round"/>
-  <path d="M142 360 C142 260 370 260 370 360" fill="none" stroke="url(#sageHorizon3)" stroke-width="12" stroke-linecap="round" filter="url(#softGlow3)"/>
+  <!-- Concentric Zen Allowance Rings (Radial Dial Geometry) -->
+  <circle cx="256" cy="256" r="185" fill="none" stroke="rgba(242, 204, 143, 0.08)" stroke-width="30"/>
+  <circle cx="256" cy="256" r="162" fill="none" stroke="url(#terracottaGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="190 290" filter="url(#warmZenGlow)"/>
+  <circle cx="256" cy="256" r="130" fill="none" stroke="url(#matchaGrad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="120 220" opacity="0.9"/>
 
-  <!-- Balancing Zen River Pebble -->
-  <ellipse cx="256" cy="355" rx="110" ry="34" fill="#0d261e" stroke="#10b981" stroke-width="4"/>
-  <ellipse cx="256" cy="350" rx="96" ry="26" fill="url(#sageHorizon3)" opacity="0.4"/>
+  <!-- Mindful Zen Pebble Centerpiece (Safe Spend Anchor) -->
+  <circle cx="256" cy="256" r="95" fill="#2c221c" stroke="rgba(242, 204, 143, 0.25)" stroke-width="2"/>
 
-  <!-- Rising Clarity Gold Sun (Safe to Spend Anchor) -->
-  <circle cx="256" cy="275" r="46" fill="url(#goldSun3)" filter="url(#softGlow3)"/>
-  <circle cx="256" cy="275" r="38" fill="#fef3c7" opacity="0.25"/>
+  <!-- The Rising Terracotta Sun & Botanical Leaf -->
+  <!-- Radiating Sun Sphere -->
+  <circle cx="256" cy="235" r="42" fill="url(#warmSunGold)" filter="url(#warmZenGlow)"/>
+  <circle cx="256" cy="235" r="34" fill="#faf5e8" opacity="0.3"/>
 
-  <!-- Zen Sparks -->
-  <circle cx="170" cy="210" r="4" fill="#5eead4" opacity="0.7"/>
-  <circle cx="342" cy="210" r="5" fill="#fef08a" opacity="0.8"/>
-  <circle cx="256" cy="160" r="3" fill="#5eead4" opacity="0.5"/>
+  <!-- Organic Botanical Matcha Leaf Arch -->
+  <path d="M 200 300 
+           C 220 270, 292 270, 312 300 
+           C 285 320, 227 320, 200 300 
+           Z" 
+        fill="url(#matchaGrad)" 
+        filter="url(#warmZenGlow)"/>
+
+  <!-- Center Keystone Seed Point -->
+  <circle cx="256" cy="295" r="5" fill="#f49c7f"/>
+
+  <!-- Mindful Warm Ambient Starlets -->
+  <circle cx="168" cy="155" r="4" fill="#f2cc8f" opacity="0.8"/>
+  <circle cx="344" cy="155" r="4" fill="#81b29a" opacity="0.8"/>
+  <circle cx="256" cy="100" r="4.5" fill="#e07a5f" opacity="0.9"/>
+  <circle cx="256" cy="425" r="4" fill="#f2cc8f" opacity="0.6"/>
 </svg>

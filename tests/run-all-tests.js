@@ -76,15 +76,15 @@ assert(Calculator.getVaultRemaining(itemCool, now).isUnlocked === true, 'Old vau
 
 console.log('\n--- SUITE 5: DOM & File Integrity ---');
 const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
-assert(html.includes('id="screen-today"'), 'HTML contains #screen-today');
-assert(html.includes('id="screen-bills"'), 'HTML contains #screen-bills');
-assert(html.includes('id="screen-vault"'), 'HTML contains #screen-vault');
-assert(html.includes('id="screen-debt"'), 'HTML contains #screen-debt');
-assert(html.includes('id="screen-notes"'), 'HTML contains #screen-notes');
-assert(html.includes('id="screen-settings"'), 'HTML contains #screen-settings');
-assert(html.includes('id="zombie-screen-overlay"'), 'HTML contains #zombie-screen-overlay');
-assert(html.includes('id="modal-add-bill"'), 'HTML contains modal #modal-add-bill');
-assert(html.includes('id="modal-add-vault"'), 'HTML contains modal #modal-add-vault');
+assert(html.includes('id="screen-allowance"'), 'HTML contains #screen-allowance');
+assert(html.includes('id="screen-living"'), 'HTML contains #screen-living');
+assert(html.includes('id="screen-cooldown"'), 'HTML contains #screen-cooldown');
+assert(html.includes('id="screen-freedom"'), 'HTML contains #screen-freedom');
+assert(html.includes('id="screen-minddump"'), 'HTML contains #screen-minddump');
+assert(html.includes('id="screen-config"'), 'HTML contains #screen-config');
+assert(html.includes('id="fog-mode-overlay"'), 'HTML contains #fog-mode-overlay');
+assert(html.includes('id="modal-add-living"'), 'HTML contains modal #modal-add-living');
+assert(html.includes('id="modal-add-cooldown"'), 'HTML contains modal #modal-add-cooldown');
 
 // Verify service worker cached assets exist on disk
 const swCode = fs.readFileSync(path.join(__dirname, '../sw.js'), 'utf8');

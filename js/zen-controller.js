@@ -6,7 +6,7 @@
   'use strict';
 
   let state = null;
-  let currentScreen = 'today';
+  let currentScreen = 'allowance';
 
   function playGentleClick() {
     if (!state || !state.profile || !state.profile.soundEnabled) return;
@@ -49,8 +49,15 @@
     }
   }
 
-  function renderToday() {
-    const safe = CoreCalculator.calculateSafeToSpend(state);
+  function renderAllowance() {
+    const adapterState = {
+      checkingCents: state.checkingCents,
+      incomeAnchor: state.incomeAnchor,
+      incomeCycle: state.incomeCycle,
+      bills: state.livingCosts,
+      transactions: state.transactions
+    };
+    const safe = CoreCalculator.calculateSafeToSpend(adapterState);
     const dialNumber = document.getElementById('dial-hero-amount');
     if (dialNumber) {
       dialNumber.textContent = CoreCalculator.formatCents(safe.safeToSpendTodayCents, state.profile.currency);
@@ -63,10 +70,10 @@
 
     const subtext = document.getElementById('dial-subtext');
     if (subtext) {
-      subtext.innerHTML = `Spendable pool: <strong>${CoreCalculator.formatCents(safe.spendablePoolCents, state.profile.currency)}</strong> • Fixed bills set aside: <strong>${CoreCalculator.formatCents(safe.pendingBillsCents, state.profile.currency)}</strong>`;
+      subtext.innerHTML = `Spendable pool: <strong>${CoreCalculator.formatCents(safe.spendablePoolCents, state.profile.currency)}</strong> • Living costs reserved: <strong>${CoreCalculator.formatCents(safe.pendingBillsCents, state.profile.currency)}</strong>`;
     }
 
-    // Render Quick Spends
+    // Render Quick Spends (Vertical 3-item stack)
     const grid = document.getElementById('zen-quick-spends');
     if (grid) {
       grid.innerHTML = (state.quickSpends || []).map(qs => `
@@ -89,28 +96,28 @@
             });
             StateManager.saveState(state);
             playGentleClick();
-            renderToday();
+            renderAllowance();
           }
         };
       });
     }
 
-    // Update Zombie Screen Hero
-    const zombieAmt = document.getElementById('zombie-screen-amount');
-    if (zombieAmt) {
-      zombieAmt.textContent = CoreCalculator.formatCents(safe.safeToSpendTodayCents, state.profile.currency);
+    // Update Fog Mode Screen Hero
+    const fogAmt = document.getElementById('fog-screen-amount');
+    if (fogAmt) {
+      fogAmt.textContent = CoreCalculator.formatCents(safe.safeToSpendTodayCents, state.profile.currency);
     }
   }
 
-  function renderBills() {
-    const list = document.getElementById('bill-list');
+  function renderLivingCosts() {
+    const list = document.getElementById('living-list');
     if (!list) return;
-    if (!state.bills || state.bills.length === 0) {
-      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">No recurring bills recorded. Tap "+ Add Bill" to reserve rent or utilities.</p>`;
+    if (!state.livingCosts || state.livingCosts.length === 0) {
+      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">No living costs recorded. Tap "+ Add Cost" to reserve rent or utilities.</p>`;
       return;
     }
 
-    list.innerHTML = state.bills.map(b => `
+    list.innerHTML = state.livingCosts.map(b => `
       <div class="harmony-card">
         <div class="card-top">
           <div class="card-name"><span>📅</span> <span>${b.name}</span></div>
@@ -118,8 +125,8 @@
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-muted);">
           <span>Due date: ${b.dueDate}</span>
-          <button type="button" class="btn-harmony-action ${b.paid ? 'cleared' : ''}" data-bill-id="${b.id}">
-            ${b.paid ? '✓ Paid' : 'Mark as Paid'}
+          <button type="button" class="btn-harmony-action ${b.paid ? 'cleared' : ''}" data-cost-id="${b.id}">
+            ${b.paid ? '✓ Settled' : 'Mark Settled'}
           </button>
         </div>
       </div>
@@ -127,28 +134,28 @@
 
     list.querySelectorAll('.btn-harmony-action').forEach(btn => {
       btn.onclick = () => {
-        const bill = state.bills.find(b => b.id === btn.dataset.billId);
-        if (bill) {
-          bill.paid = !bill.paid;
+        const cost = state.livingCosts.find(b => b.id === btn.dataset.costId);
+        if (cost) {
+          cost.paid = !cost.paid;
           playGentleClick();
           StateManager.saveState(state);
-          renderBills();
-          renderToday();
+          renderLivingCosts();
+          renderAllowance();
         }
       };
     });
   }
 
-  function renderVault() {
-    const list = document.getElementById('vault-list');
+  function renderCooldownHold() {
+    const list = document.getElementById('cooldown-list');
     if (!list) return;
-    if (!state.vaultItems || state.vaultItems.length === 0) {
-      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">Your Impulse Vault is clear. When shopping urges hit, park them here for 48 hours to cool down!</p>`;
+    if (!state.cooldownHoldItems || state.cooldownHoldItems.length === 0) {
+      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:24px;">Your Cooldown Hold is clear. When shopping urges hit, park them here for 48 hours to cool down!</p>`;
       return;
     }
 
     const now = Date.now();
-    list.innerHTML = state.vaultItems.map(item => {
+    list.innerHTML = state.cooldownHoldItems.map(item => {
       const cd = CoreCalculator.getVaultRemaining(item, now);
       return `
         <div class="harmony-card">
@@ -158,7 +165,7 @@
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-muted);">
             <span>${cd.isUnlocked ? '✨ 48 hours passed! Do you still want this?' : `Cooldown: ${cd.remainingHours}h remaining`}</span>
-            <button type="button" class="btn-harmony-action" data-vault-id="${item.id}">Release Urge</button>
+            <button type="button" class="btn-harmony-action" data-cooldown-id="${item.id}">Release Urge</button>
           </div>
         </div>
       `;
@@ -166,18 +173,18 @@
 
     list.querySelectorAll('.btn-harmony-action').forEach(btn => {
       btn.onclick = () => {
-        const idx = state.vaultItems.findIndex(i => i.id === btn.dataset.vaultId);
+        const idx = state.cooldownHoldItems.findIndex(i => i.id === btn.dataset.cooldownId);
         if (idx !== -1) {
-          state.vaultItems.splice(idx, 1);
+          state.cooldownHoldItems.splice(idx, 1);
           playGentleClick();
           StateManager.saveState(state);
-          renderVault();
+          renderCooldownHold();
         }
       };
     });
   }
 
-  function renderDebt() {
+  function renderDebtFreedom() {
     const list = document.getElementById('debt-list');
     if (!list) return;
     const plan = CoreCalculator.calculateDebtPlan(state.debts, 5000);
@@ -201,8 +208,8 @@
     `).join('');
   }
 
-  function renderNotes() {
-    const textarea = document.getElementById('notes-scratchpad-input');
+  function renderMindDump() {
+    const textarea = document.getElementById('minddump-textarea-input');
     if (textarea && state.notes !== undefined) {
       textarea.value = state.notes;
     }
@@ -210,11 +217,11 @@
 
   function renderCurrentScreen() {
     renderHeader();
-    if (currentScreen === 'today') renderToday();
-    if (currentScreen === 'bills') renderBills();
-    if (currentScreen === 'vault') renderVault();
-    if (currentScreen === 'debt') renderDebt();
-    if (currentScreen === 'notes') renderNotes();
+    if (currentScreen === 'allowance') renderAllowance();
+    if (currentScreen === 'living') renderLivingCosts();
+    if (currentScreen === 'cooldown') renderCooldownHold();
+    if (currentScreen === 'freedom') renderDebtFreedom();
+    if (currentScreen === 'minddump') renderMindDump();
   }
 
   function bindUI() {
@@ -230,21 +237,21 @@
       renderHeader();
     };
 
-    document.getElementById('btn-maya-tour').onclick = () => {
-      GuideTour.startTour();
+    document.getElementById('btn-leo-tour').onclick = () => {
+      LeoTour.startTour();
     };
 
-    // Zombie Screen
-    const zombie = document.getElementById('zombie-screen-overlay');
-    document.getElementById('btn-zombie-trigger').onclick = () => {
-      zombie.classList.add('active');
+    // Fog Mode Screen Overlay
+    const fog = document.getElementById('fog-mode-overlay');
+    document.getElementById('btn-fog-trigger').onclick = () => {
+      fog.classList.add('active');
     };
-    document.getElementById('btn-zombie-close').onclick = () => {
-      zombie.classList.remove('active');
+    document.getElementById('btn-fog-close').onclick = () => {
+      fog.classList.remove('active');
     };
 
-    // Notes auto-save
-    const textarea = document.getElementById('notes-scratchpad-input');
+    // Mind dump auto-save
+    const textarea = document.getElementById('minddump-textarea-input');
     if (textarea) {
       textarea.oninput = () => {
         state.notes = textarea.value;
@@ -252,56 +259,56 @@
       };
     }
 
-    // Add Bill Modal
-    document.getElementById('btn-add-bill-open').onclick = () => {
-      document.getElementById('modal-add-bill').classList.add('open');
+    // Add Living Cost Modal
+    document.getElementById('btn-add-living-open').onclick = () => {
+      document.getElementById('modal-add-living').classList.add('open');
     };
-    document.getElementById('btn-add-bill-close').onclick = () => {
-      document.getElementById('modal-add-bill').classList.remove('open');
+    document.getElementById('btn-add-living-close').onclick = () => {
+      document.getElementById('modal-add-living').classList.remove('open');
     };
-    document.getElementById('form-add-bill').onsubmit = (e) => {
+    document.getElementById('form-add-living').onsubmit = (e) => {
       e.preventDefault();
-      const name = document.getElementById('bill-name-field').value;
-      const amt = CoreCalculator.parseToCents(document.getElementById('bill-amt-field').value);
-      const date = document.getElementById('bill-date-field').value;
+      const name = document.getElementById('living-name-field').value;
+      const amt = CoreCalculator.parseToCents(document.getElementById('living-amt-field').value);
+      const date = document.getElementById('living-date-field').value;
       if (name && amt > 0 && date) {
-        state.bills.push({
-          id: 'b-' + Date.now(),
+        state.livingCosts.push({
+          id: 'lc-' + Date.now(),
           name: name,
           amountCents: amt,
           dueDate: date,
           paid: false
         });
         StateManager.saveState(state);
-        document.getElementById('modal-add-bill').classList.remove('open');
+        document.getElementById('modal-add-living').classList.remove('open');
         playGentleClick();
-        renderBills();
-        renderToday();
+        renderLivingCosts();
+        renderAllowance();
       }
     };
 
-    // Add Vault Modal
-    document.getElementById('btn-add-vault-open').onclick = () => {
-      document.getElementById('modal-add-vault').classList.add('open');
+    // Add Cooldown Modal
+    document.getElementById('btn-add-cooldown-open').onclick = () => {
+      document.getElementById('modal-add-cooldown').classList.add('open');
     };
-    document.getElementById('btn-add-vault-close').onclick = () => {
-      document.getElementById('modal-add-vault').classList.remove('open');
+    document.getElementById('btn-add-cooldown-close').onclick = () => {
+      document.getElementById('modal-add-cooldown').classList.remove('open');
     };
-    document.getElementById('form-add-vault').onsubmit = (e) => {
+    document.getElementById('form-add-cooldown').onsubmit = (e) => {
       e.preventDefault();
-      const name = document.getElementById('vault-name-field').value;
-      const amt = CoreCalculator.parseToCents(document.getElementById('vault-amt-field').value);
+      const name = document.getElementById('cooldown-name-field').value;
+      const amt = CoreCalculator.parseToCents(document.getElementById('cooldown-amt-field').value);
       if (name && amt > 0) {
-        state.vaultItems.push({
-          id: 'v-' + Date.now(),
+        state.cooldownHoldItems.push({
+          id: 'ch-' + Date.now(),
           name: name,
           amountCents: amt,
           parkedAt: Date.now()
         });
         StateManager.saveState(state);
-        document.getElementById('modal-add-vault').classList.remove('open');
+        document.getElementById('modal-add-cooldown').classList.remove('open');
         playGentleClick();
-        renderVault();
+        renderCooldownHold();
       }
     };
 
@@ -318,8 +325,8 @@
       document.body.dataset.theme = state.profile.theme;
       StateManager.saveState(state);
       playGentleClick();
-      renderToday();
-      alert('Settings saved successfully.');
+      renderAllowance();
+      alert('Sanctuary config saved successfully.');
     };
 
     // Backup & Restore
@@ -343,7 +350,7 @@
           state = StateManager.importStateJSON(evt.target.result);
           document.body.dataset.theme = state.profile.theme || 'sage-harmony';
           renderCurrentScreen();
-          alert('Backup restored successfully!');
+          alert('Sanctuary backup restored!');
         } catch {
           alert('Failed to parse backup file.');
         }
@@ -356,7 +363,7 @@
     state = StateManager.loadState();
     document.body.dataset.theme = state.profile.theme || 'sage-harmony';
     bindUI();
-    setScreen('today');
+    setScreen('allowance');
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});

@@ -28,16 +28,16 @@
       incomeCycle: 'biweekly',
       incomeAnchor: inFourteenDays,
       quickSpends: [
-        { id: 'qs-1', title: 'Coffee & Drink', icon: '☕', amountCents: 525 },
-        { id: 'qs-2', title: 'Takeout / Lunch', icon: '🍲', amountCents: 1400 },
-        { id: 'qs-3', title: 'Groceries / Market', icon: '🛒', amountCents: 4200 }
+        { id: 'qs-1', title: 'Morning Fuel', icon: '☕', amountCents: 600 },
+        { id: 'qs-2', title: 'Online Essentials', icon: '📦', amountCents: 1850 },
+        { id: 'qs-3', title: 'Fresh Groceries', icon: '🥦', amountCents: 4500 }
       ],
-      bills: [
-        { id: 'b-1', name: 'Housing & Rent', amountCents: 78000, dueDate: inNineDays, paid: false },
-        { id: 'b-2', name: 'Electricity & Wi-Fi', amountCents: 8200, dueDate: inNineDays, paid: false }
+      livingCosts: [
+        { id: 'lc-1', name: 'Housing & Rent', amountCents: 78000, dueDate: inNineDays, paid: false },
+        { id: 'lc-2', name: 'Electricity & Wi-Fi', amountCents: 8200, dueDate: inNineDays, paid: false }
       ],
-      vaultItems: [
-        { id: 'v-1', name: 'Ergonomic Desk Mat', amountCents: 4800, parkedAt: Date.now() - 3600000 * 20 }
+      cooldownHoldItems: [
+        { id: 'ch-1', name: 'Ergonomic Desk Mat', amountCents: 4800, parkedAt: Date.now() - 3600000 * 20 }
       ],
       debts: [
         { id: 'd-1', name: 'Credit Card Balance', balanceCents: 195000, minPaymentCents: 7000, interestRate: 19.99 }
@@ -57,8 +57,8 @@
       }
       const data = JSON.parse(raw);
       if (!data.profile) data.profile = { currency: 'USD', theme: 'sage-harmony', soundEnabled: true };
-      if (!Array.isArray(data.bills)) data.bills = [];
-      if (!Array.isArray(data.vaultItems)) data.vaultItems = [];
+      if (!Array.isArray(data.livingCosts)) data.livingCosts = [];
+      if (!Array.isArray(data.cooldownHoldItems)) data.cooldownHoldItems = [];
       if (!Array.isArray(data.debts)) data.debts = [];
       if (!Array.isArray(data.quickSpends)) data.quickSpends = [];
       if (!Array.isArray(data.transactions)) data.transactions = [];
