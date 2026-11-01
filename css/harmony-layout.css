@@ -1,0 +1,435 @@
+/* ADHD Budget Planner - Harmony Layout & Styles (Edition 3) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-zen);
+  color: var(--text-zen);
+  font-family: var(--font-zen);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.zen-shell {
+  max-width: 580px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 92px;
+  position: relative;
+}
+
+/* Header App Bar */
+.zen-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(18, 29, 25, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-zen);
+  padding: 12px 18px;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-circle-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.brand-text h1 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-zen);
+  line-height: 1.2;
+}
+
+.brand-tagline {
+  font-size: 11px;
+  color: var(--accent-mint);
+  font-weight: 600;
+}
+
+.header-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-zen-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  color: var(--text-zen);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-zen-pill:hover {
+  border-color: var(--border-glow);
+}
+
+.btn-zen-icon {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  color: var(--text-muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Screens */
+.screen {
+  display: none;
+  padding: 18px;
+  animation: fadeIn 0.25s ease;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Concentric Dial Hero Card */
+.radial-hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: var(--zen-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.dial-track-ring {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 16px auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--bg-card) 60%, var(--bg-chip) 100%);
+  border: 4px solid var(--border-zen);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.dial-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-gold);
+  margin-bottom: 4px;
+}
+
+.dial-number {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-family: var(--font-digits);
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.dial-status-pill {
+  display: inline-block;
+  background: rgba(20, 184, 166, 0.18);
+  border: 1px solid var(--border-glow);
+  color: var(--accent-mint);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.dial-subtext {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Quick Spends Chips Grid */
+.zen-quick-spends {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.zen-chip-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: 16px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--text-zen);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.zen-chip-btn:hover {
+  border-color: var(--border-glow);
+  background: var(--bg-chip);
+  transform: translateY(-2px);
+}
+
+.chip-icon { font-size: 22px; }
+.chip-title { font-size: 12px; font-weight: 700; }
+.chip-price { font-size: 11px; font-family: var(--font-digits); color: var(--accent-gold); }
+
+/* Item Cards (Bills, Vault, Debt) */
+.harmony-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: var(--transition-smooth);
+}
+
+.harmony-card:hover {
+  border-color: var(--border-glow);
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card-name {
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-val {
+  font-family: var(--font-digits);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent-gold);
+}
+
+.btn-harmony-action {
+  background: var(--accent-sage);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-harmony-action:hover {
+  opacity: 0.9;
+}
+
+.btn-harmony-action.cleared {
+  background: #064e3b;
+  color: #5eead4;
+}
+
+/* Fullscreen Zombie Mode Overlay */
+.zombie-screen-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000000;
+  z-index: 100;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.zombie-screen-overlay.active {
+  display: flex;
+}
+
+.zombie-screen-number {
+  font-size: 58px;
+  font-family: var(--font-digits);
+  font-weight: 900;
+  color: var(--accent-mint);
+  margin-bottom: 24px;
+}
+
+.btn-zombie-return {
+  background: #1c1c1c;
+  color: #a3a3a3;
+  border: 1px solid #333;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Bottom Navigation Dock */
+.zen-dock {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(18, 29, 25, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-zen);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 12px;
+  z-index: 50;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.zen-tab {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-smooth);
+}
+
+.zen-tab svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+}
+
+.zen-tab:hover {
+  color: var(--text-zen);
+}
+
+.zen-tab.active {
+  color: var(--accent-mint);
+}
+
+.zen-tab.active svg {
+  stroke: var(--accent-mint);
+}
+
+/* Modals */
+.zen-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 90;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.zen-modal-overlay.open {
+  display: flex;
+}
+
+.zen-modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  width: 100%;
+  max-width: 440px;
+  padding: 24px;
+}
+
+.zen-form-group {
+  margin-bottom: 14px;
+}
+
+.zen-form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.zen-input, .zen-select {
+  width: 100%;
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+}
+
+.zen-input:focus, .zen-select:focus {
+  border-color: var(--border-glow);
+}

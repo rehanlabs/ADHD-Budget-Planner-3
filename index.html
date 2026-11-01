@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <title>ADHD Budget Planner</title>
+  <meta name="description" content="A calm, offline, low-stimulation budget planner engineered for ADHD brains. What is safe to spend today, impulse control, and debt freedom.">
+  <meta name="theme-color" content="#14b8a6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ADHD Budget Planner">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="./css/harmony-theme.css">
+  <link rel="stylesheet" href="./css/harmony-layout.css">
+</head>
+<body data-theme="sage-harmony">
+
+  <div class="zen-shell">
+
+    <!-- Top Header App Bar -->
+    <header class="zen-header">
+      <div class="header-inner">
+        <div class="brand-group">
+          <div class="brand-circle-icon">🌿</div>
+          <div class="brand-text">
+            <h1>ADHD Budget Planner</h1>
+            <span class="brand-tagline">Serene Money Clarity</span>
+          </div>
+        </div>
+        <div class="header-btns">
+          <button type="button" class="btn-zen-pill" id="btn-zombie-trigger" title="Emergency Zombie Mode">🧟 Zombie</button>
+          <button type="button" class="btn-zen-icon" id="btn-maya-tour" title="Maya's Guided Tour">👩‍💼</button>
+          <button type="button" class="btn-zen-icon" id="btn-sound-toggle" title="Haptic Audio">🔔</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN SCREENS -->
+    <main>
+      <!-- 1. Today Screen -->
+      <section id="screen-today" class="screen active">
+        <div class="radial-hero-card">
+          <div class="dial-track-ring">
+            <span class="dial-label">✨ Safe to Spend Today</span>
+            <div class="dial-number" id="dial-hero-amount">$0.00</div>
+            <span class="dial-status-pill" id="dial-runway-pill">Runway calculating...</span>
+          </div>
+          <div class="dial-subtext" id="dial-subtext">Calculating fixed commitments...</div>
+        </div>
+
+        <div style="font-size:12px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">
+          ⚡ 1-Tap Quick Spends
+        </div>
+        <div class="zen-quick-spends" id="zen-quick-spends">
+          <!-- Populated dynamically -->
+        </div>
+
+        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:16px;padding:16px;">
+          <div style="font-size:13px;font-weight:700;color:var(--accent-mint);margin-bottom:6px;">💡 ADHD Golden Rule:</div>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">
+            Before making a discretionary purchase, glance at Safe to Spend Today. If it’s green, spend guilt-free knowing rent and bills are completely protected!
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. Bills Runway Screen -->
+      <section id="screen-bills" class="screen">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <h2 style="font-size:18px;font-weight:800;">Bills & Fixed Runway</h2>
+            <p style="font-size:12px;color:var(--text-muted);">Fixed commitments reserved before calculating your allowance.</p>
+          </div>
+          <button type="button" class="btn-harmony-action" id="btn-add-bill-open">+ Add Bill</button>
+        </div>
+        <div id="bill-list">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+
+      <!-- 3. Impulse Vault Screen -->
+      <section id="screen-vault" class="screen">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <h2 style="font-size:18px;font-weight:800;">48-Hour Impulse Vault</h2>
+            <p style="font-size:12px;color:var(--text-muted);">Park impulse shopping urges here. 82% fade calmly in 48 hours.</p>
+          </div>
+          <button type="button" class="btn-harmony-action" id="btn-add-vault-open">+ Park Urge</button>
+        </div>
+        <div id="vault-list">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+
+      <!-- 4. Debt Crusher Screen -->
+      <section id="screen-debt" class="screen">
+        <div style="margin-bottom:16px;">
+          <h2 style="font-size:18px;font-weight:800;">Debt Crusher</h2>
+          <p style="font-size:12px;color:var(--text-muted);">Snowball & Avalanche accelerated debt freedom path.</p>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:16px;padding:18px;text-align:center;margin-bottom:16px;">
+          <div style="font-size:11px;font-weight:700;color:var(--accent-gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Freedom Projection</div>
+          <div style="font-size:17px;font-weight:800;color:var(--text-zen);" id="debt-freedom-plan">Calculating projection...</div>
+        </div>
+        <div id="debt-list">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+
+      <!-- 5. Brain Dump Scratchpad Screen -->
+      <section id="screen-notes" class="screen">
+        <h2 style="font-size:18px;font-weight:800;margin-bottom:6px;">Brain Dump Scratchpad</h2>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Zero-friction capture for money thoughts, upcoming purchases, or anxiety relief.</p>
+        <textarea id="notes-scratchpad-input" class="zen-input" style="height:280px;resize:none;font-size:14px;line-height:1.6;" placeholder="Type anything on your mind... auto-saves instantly."></textarea>
+      </section>
+
+      <!-- 6. Settings Screen -->
+      <section id="screen-settings" class="screen">
+        <h2 style="font-size:18px;font-weight:800;margin-bottom:16px;">Settings & Backup</h2>
+        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:16px;padding:18px;margin-bottom:18px;">
+          <form id="form-settings">
+            <div class="zen-form-group">
+              <label>Checking Account Balance ($)</label>
+              <input type="number" step="0.01" class="zen-input" id="settings-checking-field" required>
+            </div>
+            <div class="zen-form-group">
+              <label>Payday Cycle</label>
+              <select class="zen-select" id="settings-cycle-field">
+                <option value="weekly">Weekly</option>
+                <option value="biweekly">Bi-Weekly (Every 2 Weeks)</option>
+                <option value="semimonthly">Semi-Monthly (1st & 15th)</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+            <div class="zen-form-group">
+              <label>Visual Color Theme</label>
+              <select class="zen-select" id="settings-theme-field">
+                <option value="sage-harmony">Sage Harmony</option>
+                <option value="oled-minimal">OLED Minimal</option>
+                <option value="sand-linen">Sand & Linen (Light)</option>
+                <option value="ocean-calm">Ocean Calm</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Save Settings 🌿</button>
+          </form>
+        </div>
+
+        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:16px;padding:18px;">
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px;">💾 Backup & Device Transfer</div>
+          <button type="button" class="btn-harmony-action" id="btn-export-backup" style="width:100%;padding:12px;margin-bottom:14px;">Download Backup (.json)</button>
+          <label style="display:block;font-size:12px;color:var(--text-muted);margin-bottom:6px;">Restore Backup File:</label>
+          <input type="file" id="input-restore-backup" accept=".json" class="zen-input" style="font-size:12px;padding:6px;">
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Navigation Dock -->
+    <nav class="zen-dock" aria-label="Main Navigation">
+      <button type="button" class="zen-tab active" data-nav="today">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="9"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 3"/>
+        </svg>
+        <span>Today</span>
+      </button>
+
+      <button type="button" class="zen-tab" data-nav="bills">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+        </svg>
+        <span>Bills</span>
+      </button>
+
+      <button type="button" class="zen-tab" data-nav="vault">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <span>Vault</span>
+      </button>
+
+      <button type="button" class="zen-tab" data-nav="debt">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        <span>Debt</span>
+      </button>
+
+      <button type="button" class="zen-tab" data-nav="notes">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+        </svg>
+        <span>Notes</span>
+      </button>
+
+      <button type="button" class="zen-tab" data-nav="settings">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="3"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+        <span>Settings</span>
+      </button>
+    </nav>
+
+    <!-- FULLSCREEN ZOMBIE SCREEN OVERLAY -->
+    <div id="zombie-screen-overlay" class="zombie-screen-overlay">
+      <div style="font-size:18px;color:#737373;font-weight:700;margin-bottom:8px;">🧟 Zombie Mode Active</div>
+      <p style="font-size:13px;color:#a3a3a3;margin-bottom:24px;">Low cognitive bandwidth day? Here is your single answer right now:</p>
+      <div style="font-size:14px;color:#737373;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Safe to Spend Today</div>
+      <div class="zombie-screen-number" id="zombie-screen-amount">$0.00</div>
+      <button type="button" class="btn-zombie-return" id="btn-zombie-close">Exit Zombie Mode 🌿</button>
+    </div>
+
+    <!-- MODAL: Add Bill -->
+    <div id="modal-add-bill" class="zen-modal-overlay">
+      <div class="zen-modal-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="font-size:16px;font-weight:800;">📅 Add Recurring Bill</h3>
+          <button type="button" class="btn-zen-icon" id="btn-add-bill-close" style="width:28px;height:28px;">&times;</button>
+        </div>
+        <form id="form-add-bill">
+          <div class="zen-form-group">
+            <label>Bill Name (e.g. Rent, Electricity, Internet)</label>
+            <input type="text" class="zen-input" id="bill-name-field" placeholder="Housing Rent" required>
+          </div>
+          <div class="zen-form-group">
+            <label>Amount ($)</label>
+            <input type="number" step="0.01" class="zen-input" id="bill-amt-field" placeholder="780.00" required>
+          </div>
+          <div class="zen-form-group">
+            <label>Due Date</label>
+            <input type="date" class="zen-input" id="bill-date-field" required>
+          </div>
+          <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Add Bill 🌿</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL: Add Vault Item -->
+    <div id="modal-add-vault" class="zen-modal-overlay">
+      <div class="zen-modal-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="font-size:16px;font-weight:800;">⏳ Park in 48-Hour Vault</h3>
+          <button type="button" class="btn-zen-icon" id="btn-add-vault-close" style="width:28px;height:28px;">&times;</button>
+        </div>
+        <form id="form-add-vault">
+          <div class="zen-form-group">
+            <label>Item Name / Purchase Urge</label>
+            <input type="text" class="zen-input" id="vault-name-field" placeholder="Ergonomic Keyboard" required>
+          </div>
+          <div class="zen-form-group">
+            <label>Price ($)</label>
+            <input type="number" step="0.01" class="zen-input" id="vault-amt-field" placeholder="89.00" required>
+          </div>
+          <button type="submit" class="btn-harmony-action" style="width:100%;padding:12px;margin-top:6px;">Park Urge for 48 Hours ⏳</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="./js/core-calculator.js"></script>
+  <script src="./js/state-manager.js"></script>
+  <script src="./js/guide-tour.js"></script>
+  <script src="./js/zen-controller.js"></script>
+</body>
+</html>

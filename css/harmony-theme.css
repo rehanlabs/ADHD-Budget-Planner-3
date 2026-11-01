@@ -1,0 +1,80 @@
+/* ADHD Budget Planner - Harmony Theme Definitions (Edition 3) */
+:root {
+  --font-zen: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+  --font-digits: 'SF Mono', 'Roboto Mono', 'Courier New', monospace;
+  --radius-zen: 20px;
+  --radius-pill: 99px;
+  --transition-smooth: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 1. Sage Harmony (Default) */
+body[data-theme="sage-harmony"] {
+  --bg-zen: #111d19;
+  --bg-card: #182a24;
+  --bg-chip: #213a32;
+  --bg-chip-hover: #2a493f;
+  --border-zen: #29473d;
+  --border-glow: #14b8a6;
+  --text-zen: #f2fbf7;
+  --text-muted: #a7f3d0;
+  --text-hint: #6ee7b7;
+  --accent-sage: #14b8a6;
+  --accent-mint: #5eead4;
+  --accent-gold: #fde047;
+  --accent-rose: #f43f5e;
+  --zen-shadow: 0 10px 30px rgba(20, 184, 166, 0.12);
+}
+
+/* 2. OLED Minimal */
+body[data-theme="oled-minimal"] {
+  --bg-zen: #050505;
+  --bg-card: #111111;
+  --bg-chip: #1c1c1c;
+  --bg-chip-hover: #262626;
+  --border-zen: #2a2a2a;
+  --border-glow: #5eead4;
+  --text-zen: #ffffff;
+  --text-muted: #a3a3a3;
+  --text-hint: #737373;
+  --accent-sage: #5eead4;
+  --accent-mint: #2dd4bf;
+  --accent-gold: #fde047;
+  --accent-rose: #f43f5e;
+  --zen-shadow: none;
+}
+
+/* 3. Sand & Linen (Gentle Light) */
+body[data-theme="sand-linen"] {
+  --bg-zen: #fbf9f5;
+  --bg-card: #ffffff;
+  --bg-chip: #f4eee6;
+  --bg-chip-hover: #ebdcd0;
+  --border-zen: #e6ded5;
+  --border-glow: #0d9488;
+  --text-zen: #2d2621;
+  --text-muted: #645b54;
+  --text-hint: #8c8077;
+  --accent-sage: #0d9488;
+  --accent-mint: #14b8a6;
+  --accent-gold: #d97706;
+  --accent-rose: #e11d48;
+  --zen-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* 4. Ocean Calm */
+body[data-theme="ocean-calm"] {
+  --bg-zen: #0f172a;
+  --bg-card: #1e293b;
+  --bg-chip: #334155;
+  --bg-chip-hover: #475569;
+  --border-zen: #334155;
+  --border-glow: #38bdf8;
+  --text-zen: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-hint: #64748b;
+  --accent-sage: #0284c7;
+  --accent-mint: #38bdf8;
+  --accent-gold: #fbbf24;
+  --accent-rose: #f43f5e;
+  --zen-shadow: 0 10px 30px rgba(2, 132, 199, 0.15);
+}
